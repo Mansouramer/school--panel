@@ -1713,7 +1713,7 @@ const rolePasswords = {
         function saveDataLocally() {
             const dataToSave = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, readinessData, teachersPerformanceData, sustainabilityRecords };
             try {
-                localStorage.setItem('dawood_school_system_backup', JSON.stringify(dataToSave));
+                localStorage.setItem('K_BACKUP', JSON.stringify(dataToSave));
                 fetch(GOOGLE_DRIVE_WEB_APP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1724,7 +1724,7 @@ const rolePasswords = {
 
         function resetDefaultData() {
             if(confirm('هل أنت متأكد من إعادة ضبط البيانات واستعادة السجلات الافتراضية؟ سيتم تحديث الصفحة.')) {
-                localStorage.removeItem('dawood_school_system_backup');
+                localStorage.removeItem('K_BACKUP');
                 location.reload();
             }
         }
@@ -1736,7 +1736,7 @@ const rolePasswords = {
             reader.onload = function(e) {
                 try {
                     const parsed = JSON.parse(e.target.result);
-                    localStorage.setItem('dawood_school_system_backup', JSON.stringify(parsed));
+                    localStorage.setItem('K_BACKUP', JSON.stringify(parsed));
                     alert('✅ تمت استعادة النسخة الاحتياجية بنجاح! سيتم تحديث الصفحة الآن.');
                     location.reload();
                 } catch(err) {
@@ -1753,7 +1753,7 @@ const rolePasswords = {
                 if (cloudData && cloudData.dataToSave) {
                     const parsed = cloudData.dataToSave;
                     applyLoadedData(parsed);
-                    localStorage.setItem('dawood_school_system_backup', JSON.stringify(parsed));
+                    localStorage.setItem('K_BACKUP', JSON.stringify(parsed));
                 }
             } catch(e) {}
         }
@@ -1832,7 +1832,7 @@ const rolePasswords = {
             document.getElementById('schoolHeaderLabel').innerText = "وزارة التعليم | إدارة التعليم بالمدينة المنورة | " + schoolConfig.schoolName;
             document.getElementById('principalHeaderLabel').innerText = schoolConfig.developerName;
 
-            const saved = localStorage.getItem('dawood_school_system_backup');
+            const saved = localStorage.getItem('K_BACKUP');
             if (saved) {
                 try {
                     applyLoadedData(JSON.parse(saved));
