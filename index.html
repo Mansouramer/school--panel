@@ -670,7 +670,7 @@ const rolePasswords = {
 };
 
         let activeUserRole = localStorage.getItem('K_ROLE') || null;
-        let loggedTeacherName = localStorage.getItem('dawood_logged_teacher') || null;
+        let loggedTeacherName = localStorage.getItem('K_TEACHER') || null;
         let currentSection = 'teacherPerf';
         let editingIndex = null;
         let currentImagesList = [];
@@ -1632,7 +1632,7 @@ const rolePasswords = {
                     activeUserRole = role;
                     loggedTeacherName = null;
                     localStorage.setItem('K_ROLE', activeUserRole);
-                    localStorage.removeItem('dawood_logged_teacher');
+                    localStorage.removeItem('K_TEACHER');
                     document.getElementById('loginModal').classList.add('hidden');
                     errorMsg.classList.add('hidden');
                     applyRoleRestrictions();
@@ -1652,7 +1652,7 @@ const rolePasswords = {
                     activeUserRole = 'teacher';
                     loggedTeacherName = teacher.name;
                     localStorage.setItem('K_ROLE', 'teacher');
-                    localStorage.setItem('dawood_logged_teacher', loggedTeacherName);
+                    localStorage.setItem('K_TEACHER', loggedTeacherName);
                     document.getElementById('loginModal').classList.add('hidden');
                     errorMsg.classList.add('hidden');
                     applyRoleRestrictions();
@@ -1665,7 +1665,7 @@ const rolePasswords = {
 
         function logoutSession() {
             localStorage.removeItem('K_ROLE');
-            localStorage.removeItem('dawood_logged_teacher');
+            localStorage.removeItem('K_TEACHER');
             location.reload();
         }
 
