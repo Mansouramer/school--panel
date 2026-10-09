@@ -1,7 +1,7 @@
 {
-  "name": "Dawood school system",
-  "short_name": "Dawood",
-  "description": "School management system",
+  "name": "School Management System",
+  "short_name": "SchoolSys",
+  "description": "Comprehensive school management and records system",
   "start_url": "/index.html",
   "scope": "/",
   "display": "standalone",
