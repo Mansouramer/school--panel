@@ -1856,7 +1856,7 @@ const rolePasswords = {
             await syncDataFromCloud();
             renderTable();
 
-            const savedBg = localStorage.getItem('school_bg_pattern');
+            const savedBg = localStorage.getItem('K_BG');
             if(savedBg) changeBackground(savedBg);
         }
 
@@ -1886,7 +1886,7 @@ const rolePasswords = {
             if(type === 'blue') body.classList.add('bg-theme-blue');
             else if(type === 'emerald') body.classList.add('bg-theme-emerald');
             else if(type === 'amber') body.classList.add('bg-theme-amber');
-            localStorage.setItem('school_bg_pattern', type);
+            localStorage.setItem('K_BG', type);
         }
 
         function printReport() {
