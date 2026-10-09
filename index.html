@@ -669,7 +669,7 @@ const rolePasswords = {
     "eduAffairs": "2222", "studentAffairs": "3333", "evalSpecialist": "4444"
 };
 
-        let activeUserRole = localStorage.getItem('dawood_user_role') || null;
+        let activeUserRole = localStorage.getItem('K_ROLE') || null;
         let loggedTeacherName = localStorage.getItem('dawood_logged_teacher') || null;
         let currentSection = 'teacherPerf';
         let editingIndex = null;
@@ -1631,7 +1631,7 @@ const rolePasswords = {
                 if (rolePasswords[role] === password) {
                     activeUserRole = role;
                     loggedTeacherName = null;
-                    localStorage.setItem('dawood_user_role', activeUserRole);
+                    localStorage.setItem('K_ROLE', activeUserRole);
                     localStorage.removeItem('dawood_logged_teacher');
                     document.getElementById('loginModal').classList.add('hidden');
                     errorMsg.classList.add('hidden');
@@ -1651,7 +1651,7 @@ const rolePasswords = {
                 if(teacher.pin === pin) {
                     activeUserRole = 'teacher';
                     loggedTeacherName = teacher.name;
-                    localStorage.setItem('dawood_user_role', 'teacher');
+                    localStorage.setItem('K_ROLE', 'teacher');
                     localStorage.setItem('dawood_logged_teacher', loggedTeacherName);
                     document.getElementById('loginModal').classList.add('hidden');
                     errorMsg.classList.add('hidden');
@@ -1664,7 +1664,7 @@ const rolePasswords = {
         }
 
         function logoutSession() {
-            localStorage.removeItem('dawood_user_role');
+            localStorage.removeItem('K_ROLE');
             localStorage.removeItem('dawood_logged_teacher');
             location.reload();
         }
