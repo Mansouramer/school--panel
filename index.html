@@ -1829,8 +1829,8 @@ const rolePasswords = {
         }
 
         async function loadDataLocally() {
-            document.getElementById('schoolHeaderLabel').innerText = "وزارة التعليم | إدارة التعليم بالمدينة المنورة | " + schoolConfig.schoolName;
-            document.getElementById('principalHeaderLabel').innerText = schoolConfig.developerName;
+            document.getElementById('fillSchoolInfo();').innerText = "وزارة التعليم | إدارة التعليم بالمدينة المنورة | " + schoolConfig.schoolName;
+            document.getElementById('fillSchoolInfo();').innerText = schoolConfig.developerName;
 
             const saved = localStorage.getItem('K_BACKUP');
             if (saved) {
