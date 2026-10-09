@@ -209,7 +209,7 @@
                     <label class="block text-xs font-bold text-gray-700 mb-1">اختر صفة الدخول:</label>
                     <select id="loginTypeSelect" onchange="toggleLoginFields()" class="w-full border border-gray-300 rounded-2xl px-3 sm:px-4 py-3 text-sm focus:outline-none focus:border-blue-500 bg-white/50 font-medium">
                         <option value="admin">👑 الإدارة والوكلاء واللجان</option>
-                        <option value="teacher">👨‍🏫 دخول المعلمين (برقم سري خاص)</option>
+                        <option value="teacher">👨‍🏫 دخول المعلمين/ات(برقم سري خاص)</option>
                     </select>
                 </div>
 
@@ -217,12 +217,12 @@
                     <div>
                         <label class="block text-xs font-bold text-gray-700 mb-1">اختر القسم أو الوظيفة:</label>
                         <select id="userRoleSelect" class="w-full border border-gray-300 rounded-2xl px-3 sm:px-4 py-3 text-sm focus:outline-none focus:border-blue-500 bg-white/50 font-medium">
-                            <option value="principal">👑 مدير المدرسة</option>
-                            <option value="counselor">🤝 الموجه الطلابي</option>
-                            <option value="schoolAffairs">🏫 وكيل الشؤون المدرسية</option>
-                            <option value="eduAffairs">📚 وكيل الشؤون التعليمية</option>
-                            <option value="studentAffairs">🎓 وكيل شؤون الطلاب</option>
-                            <option value="evalSpecialist">🧭 أخصائي التقويم المدرسي</option>
+                            <option value="principal">👑 مدير/ة المدرسة</option>
+                            <option value="counselor">🤝 الموجه/ة الطلابي</option>
+                            <option value="schoolAffairs">🏫 وكيل/ة الشؤون المدرسية</option>
+                            <option value="eduAffairs">📚 وكيل/ة الشؤون التعليمية</option>
+                            <option value="studentAffairs">🎓 وكيل/ة شؤون الطلاب</option>
+                            <option value="evalSpecialist">🧭 أخصائي/ة التقويم المدرسي</option>
                         </select>
                     </div>
                     <div>
@@ -233,7 +233,7 @@
 
                 <div id="teacherLoginBox" class="space-y-3 hidden">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">اختر اسم المعلم:</label>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">اختر اسم المعلم/ة:</label>
                         <select id="teacherLoginSelect" class="w-full border border-gray-300 rounded-2xl px-3 sm:px-4 py-3 text-sm focus:outline-none focus:border-blue-500 bg-white/50 font-medium">
                             <option value="">-- اختر اسمك من القائمة --</option>
                         </select>
@@ -325,15 +325,15 @@
         <div class="relative group role-restricted" data-allowed="principal">
             <button onclick="toggleDropdown('dropdownMenu')" class="w-full p-2.5 sm:p-3 rounded-xl text-center transition bg-indigo-600 hover:bg-indigo-700 text-white shadow-md flex flex-col items-center justify-center gap-1">
                 <span class="text-lg sm:text-xl">👑</span>
-                <span class="text-[11px] sm:text-xs font-bold">سجلات المدير ▾</span>
+                <span class="text-[11px] sm:text-xs font-bold">سجلات المدير/ة ▾</span>
             </button>
             <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-60 sm:w-72 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/40 z-50 max-h-80 overflow-y-auto p-2 text-right">
                 <div class="flex justify-between items-center p-2 border-b border-indigo-100 bg-indigo-100/50 rounded-xl mb-1">
-                    <span class="text-xs font-bold text-indigo-800">سجلات وملفات مدير المدرسة</span>
+                    <span class="text-xs font-bold text-indigo-800">سجلات وملفات مدير/ة المدرسة</span>
                     <button onclick="openSectionModal('principal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-lg text-xs font-medium transition shadow-sm">➕ إضافة</button>
                 </div>
-                <div onclick="switchSection('principal')" class="p-2 hover:bg-indigo-100/50 rounded-xl text-xs cursor-pointer font-bold text-indigo-800">📂 فتح كافة سجلات المدير بالأسفل</div>
-                <div onclick="switchSection('pdImpact')" class="p-2 hover:bg-violet-100/60 rounded-xl text-xs cursor-pointer font-bold text-violet-800 flex items-center gap-1.5">💡 سجل متابعة أثر التطوير المهني للمعلم</div>
+                <div onclick="switchSection('principal')" class="p-2 hover:bg-indigo-100/50 rounded-xl text-xs cursor-pointer font-bold text-indigo-800">📂 فتح كافة سجلات المدير/ة بالأسفل</div>
+                <div onclick="switchSection('pdImpact')" class="p-2 hover:bg-violet-100/60 rounded-xl text-xs cursor-pointer font-bold text-violet-800 flex items-center gap-1.5">💡 سجل متابعة أثر التطوير المهني للمعلم/ة</div>
             </div>
         </div>
 
@@ -388,14 +388,14 @@
         <div class="relative group role-restricted" data-allowed="principal,studentAffairs">
             <button onclick="toggleDropdown('dropdownStudentAffairs')" class="w-full p-2.5 sm:p-3 rounded-xl text-center transition bg-rose-600 hover:bg-rose-700 text-white shadow-md flex flex-col items-center justify-center gap-1">
                 <span class="text-lg sm:text-xl">🎓</span>
-                <span class="text-[11px] sm:text-xs font-bold">شؤون الطلاب ▾</span>
+                <span class="text-[11px] sm:text-xs font-bold">شؤون الطلاب/ات ▾</span>
             </button>
             <div id="dropdownStudentAffairs" class="hidden absolute right-0 mt-2 w-60 sm:w-72 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/40 z-50 max-h-80 overflow-y-auto p-2 text-right">
                 <div class="flex justify-between items-center p-2 border-b border-rose-100 bg-rose-100/50 rounded-xl mb-1">
-                    <span class="text-xs font-bold text-rose-800">سجلات شؤون الطلاب</span>
+                    <span class="text-xs font-bold text-rose-800">سجلات شؤون الطلاب/ات</span>
                     <button onclick="openSectionModal('studentAffairs')" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded-lg text-xs font-medium transition shadow-sm">➕ إضافة</button>
                 </div>
-                <div onclick="switchSection('studentAffairs')" class="p-2 hover:bg-rose-100/50 rounded-xl text-xs cursor-pointer font-bold text-rose-800">📂 فتح كافة سجلات شؤون الطلاب</div>
+                <div onclick="switchSection('studentAffairs')" class="p-2 hover:bg-rose-100/50 rounded-xl text-xs cursor-pointer font-bold text-rose-800">📂 فتح كافة سجلات شؤون الطلاب/ات</div>
             </div>
         </div>
 
@@ -464,7 +464,7 @@
         </button>
         <button onclick="switchSection('teacherPerf')" id="tab-teacherPerf" class="p-2.5 sm:p-3 rounded-xl text-center transition bg-white/70 hover:bg-white text-gray-800 shadow-sm flex flex-col items-center justify-center gap-1 role-restricted border border-white/50 font-bold" data-allowed="principal">
             <span class="text-lg sm:text-xl">⭐</span>
-            <span class="text-[11px] sm:text-xs">تقييم أداء المعلمين</span>
+            <span class="text-[11px] sm:text-xs">تقييم أداء المعلمين/ات</span>
         </button>
     </div>
 
@@ -483,7 +483,7 @@
         </div>
 
         <div class="text-center text-[11px] sm:text-xs text-gray-700 font-medium my-1 w-full sm:w-auto">
-            <span>المستخدم الحالي: <strong id="loggedUserLabel" class="text-blue-700">مدير المدرسة</strong></span>
+            <span>المستخدم الحالي: <strong id="loggedUserLabel" class="text-blue-700">مدير/ة المدرسة</strong></span>
             <button onclick="logoutSession()" class="mr-3 text-red-700 underline font-bold hover:text-red-900">تسجيل الخروج</button>
         </div>
 
@@ -690,7 +690,7 @@
                 evidences: {}
             },
             {
-                name: "أ. خالد عبد الله العمري",
+                name: "امل العمري",
                 pin: "1002",
                 evaluations: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: false, 8: true, 9: true, 10: true, 11: false },
                 evidences: {}
@@ -704,9 +704,9 @@
         ];
 
         const evaluationCriteriaList = [
-            { id: 1, title: "أداء الواجبات الوظيفية", weight: "%10", examples: "المشاركة الفاعلة في المناسبات الوطنية - تعزيز قيم المواطنة والانتماء لدى الطلاب" },
+            { id: 1, title: "أداء الواجبات الوظيفية", weight: "%10", examples: "المشاركة الفاعلة في المناسبات الوطنية - تعزيز قيم المواطنة والانتماء لدى الطلاب/ات" },
             { id: 2, title: "التفاعل مع المجتمع المهني", weight: "%10", examples: "المشاركة الإيجابية في مجتمعات التعلم المهنية - تبادل الزيارات الصفية الناجحة" },
-            { id: 3, title: "التفاعل مع أولياء الأمور", weight: "%10", examples: "التواصل المستمر مع أولياء الأمور بالتنسيق مع الموجه الطلابي لمتابعة مستوى الطلاب" },
+            { id: 3, title: "التفاعل مع أولياء الأمور", weight: "%10", examples: "التواصل المستمر مع أولياء الأمور بالتنسيق مع الموجه/ة الطلابي/ة لمتابعة مستوى الطلاب/ات" },
             { id: 4, title: "التنويع في استراتيجيات التدريس", weight: "%10", examples: "تطبيق استراتيجيات تعلم نشط متنوعة تناسب مستويات الطلاب وتراعي الفروق الفردية" },
             { id: 5, title: "تحسين نتائج المتعلمين", weight: "%10", examples: "معالجة الفاقد التعليمي ووضع خطط علاجية وإثرائية للطلاب الضعاف والمتفوقين" },
             { id: 6, title: "إعداد وتنفيذ خطة التعلم", weight: "%10", examples: "توزيع المنهج بدقة وإعداد الدروس اليومية وتكليف الطلاب بالواجبات الهادفة" },
