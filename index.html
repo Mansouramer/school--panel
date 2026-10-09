@@ -3232,6 +3232,83 @@ const rolePasswords = {
             html += `</tbody></table></div>`;
             container.innerHTML = html;
         }
+        // ===== بيانات المدرسة =====
+function fillSchoolInfo() {
+    document.querySelectorAll('.js-school-name').forEach(e => e.textContent = schoolConfig.schoolName);
+    document.querySelectorAll('.js-principal-val').forEach(e => e.textContent = schoolConfig.developerName);
+    document.querySelectorAll('.js-principal-line').forEach(e => e.textContent = 'مدير/ة المدرسة / ' + schoolConfig.developerName);
+    document.title = 'النظام الشامل - ' + schoolConfig.schoolName;
+}
+
+// ===== بنين / بنات =====
+const IS_FEM = (cfg.gender === 'female');
+const W = '(?![\\u0621-\\u064A])';
+const R = (p, r) => [new RegExp(p, 'g'), r];
+const MALE_RULES = [ R('\\/(?:ة|ات|ي)' + W, '') ];
+const FEM_RULES = [
+    R('الطلاب\\/ات', 'الطالبات'), R('المعلمين\\/ات', 'المعلمات'),
+    R('\\/ة', 'ة'), R('\\/ات', 'ات'),
+    R('(متعلم|منسوب|متفوق|موهوب|متعثر|مستفيد|مستجد|متأخر)ين' + W, '$1ات'),
+    R('معلمين' + W, 'معلمات'), R('معلمون' + W, 'معلمات'),
+    R('معلمنا' + W, 'معلمتنا'), R('الفاضل' + W, 'الفاضلة'),
+    R('معلم' + W, 'معلمة'), R('طلاب' + W, 'طالبات'), R('طلابي' + W, 'طلابية'),
+    R('مدير' + W, 'مديرة'), R('وكيل' + W, 'وكيلة'), R('أخصائي' + W, 'أخصائية'),
+    R('موجه' + W, 'موجهة'), R('مرشد' + W, 'مرشدة'), R('منسق' + W, 'منسقة'),
+    R('رائد' + W, 'رائدة'), R('مشرف' + W, 'مشرفة')
+];
+function genderize(s) {
+    const rules = IS_FEM ? FEM_RULES : MALE_RULES;
+    for (const [re, r] of rules) s = s.replace(re, r);
+    return s;
+}
+const _alert = window.alert.bind(window);
+window.alert = m => _alert(genderize(String(m)));
+const _confirm = window.confirm.bind(window);
+window.confirm = m => _confirm(genderize(String(m)));
+
+let _gRaf;
+const _gObs = new MutationObserver(() => { cancelAnimationFrame(_gRaf); _gRaf = requestAnimationFrame(applyGender); });
+function applyGender() {
+    _gObs.disconnect();
+    const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: n => ['SCRIPT', 'STYLE', 'TEXTAREA'].includes(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    let n;
+    while ((n = tw.nextNode())) {
+        if (n.o === undefined) n.o = n.nodeValue;
+        const v = genderize(n.__o);
+        if (v !== n.nodeValue) n.nodeValue = v;
+    }
+    document.querySelectorAll('[placeholder],[title]').forEach(el => {
+        ['placeholder', 'title'].forEach(a => {
+            if (!el.hasAttribute(a)) return;
+            if (el['o_' + a] === undefined) el['o_' + a] = el.getAttribute(a);
+            el.setAttribute(a, genderize(el['__o_' + a]));
+        });
+    });
+    document.title = genderize(document.title);
+    _gObs.observe(document.body, { childList: true, subtree: true });
+}
+
+// ===== تثبيت التطبيق =====
+let deferredPrompt = null;
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
+window.addEventListener('appinstalled', () => { document.getElementById('installBtn').style.display = 'none'; });
+if (!isStandalone()) document.getElementById('installBtn').style.display = 'flex';
+async function installApp() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+    } else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+        alert('للتثبيت على الآيفون: اضغط زر المشاركة (⬆️) في سفاري، ثم اختر "إضافة إلى الشاشة الرئيسية".');
+    } else {
+        alert('للتثبيت: افتح قائمة المتصفح (⋮) ثم اختر "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية".');
+    }
+}
+
+applyGender();
 
         loadDataLocally();
     </script>
