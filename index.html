@@ -3180,8 +3180,9 @@ function applyGender() {
 let deferredPrompt = null;
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
-window.addEventListener('appinstalled', () => { document.getElementById('installBtn').style.display = 'none'; });
-if (!isStandalone()) document.getElementById('installBtn').style.display = 'flex';
+window.addEventListener('appinstalled', () => { const b = document.getElementById('installBtn'); if (b) b.style.display = 'none'; });
+const _ib = document.getElementById('installBtn');
+if (_ib && !isStandalone()) _ib.style.display = 'flex';
 async function installApp() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
