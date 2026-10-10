@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سجل متابعة أثر التطوير المهني للمعلمات - لوحة تحكم المعلمات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-900:#0b4b48;
+    --teal-700:#0f6e6a;
+    --teal-500:#158f89;
+    --teal-100:#e5f3f2;
+    --teal-050:#f3faf9;
+    --red:#c0392b;
+    --ink:#1c2624;
+    --ink-soft:#5b6866;
+    --line:#dde5e3;
+    --paper:#ffffff;
+    --bg:#eef3f2;
+    --amber:#b7791f;
+    font-family:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+  body{line-height:1.7;padding:28px 16px 80px;}
+  .wrap{max-width:900px;margin:0 auto;}
+
+  .top{
+    background:linear-gradient(120deg, #4c1d95, #6d28d9 45%, #0f766e 100%);
+    color:#fff; border-radius:18px; padding:28px 28px 24px;
+    box-shadow:0 12px 34px -14px rgba(76,29,149,.55);
+  }
+  .top .school{font-size:14px; opacity:.85; margin:0 0 6px;}
+  .top h1{font-size:26px; margin:0 0 8px; font-weight:900; display:flex; align-items:center; gap:10px;}
+  .title-icon{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:42px; height:42px; border-radius:14px; background:rgba(255,255,255,.18);
+    font-size:22px; flex:none;
+  }
+  .top .principal{font-size:13.5px; opacity:.9; margin:0;}
+
+  /* القائمة السريعة للأنقسام */
+  .quicknav{
+    position:sticky; top:12px; z-index:29; margin:14px 0 0;
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:10px 14px; box-shadow:0 6px 18px -10px rgba(0,0,0,.14);
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .quicknav a{
+    display:flex; align-items:center; gap:6px; text-decoration:none;
+    font-size:12.5px; font-weight:700; color:var(--ink); padding:6px 10px;
+    border-radius:999px; border:1px solid var(--line); transition:.15s ease;
+  }
+  .quicknav a:hover{transform:translateY(-1px); box-shadow:0 4px 10px -6px rgba(0,0,0,.3);}
+  .quicknav .dot{width:9px; height:9px; border-radius:50%; background:#d7dcda; flex:none; transition:.2s ease;}
+  .quicknav a.done .dot{background:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.18);}
+  .goal{
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+    border-radius:12px; padding:14px 16px; margin-top:16px; font-size:14px;
+  }
+  .goal b{font-weight:700;}
+
+  .note{
+    background:#fff7ea; border:1px solid #f0d9a6; color:#7a5b12;
+    border-radius:12px; padding:12px 16px; font-size:13.5px; margin:18px 0;
+  }
+  .note b{color:var(--amber);}
+
+  /* sticky summary bar */
+  .summary-bar{
+    position:sticky; top:12px; z-index:30; margin:18px 0;
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; box-shadow:0 6px 18px -10px rgba(0,0,0,.18);
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  }
+  .summary-bar .score-num{font-size:30px; font-weight:900; color:var(--teal-700); min-width:82px;}
+  .summary-bar .score-num span{font-size:14px; font-weight:500; color:var(--ink-soft);}
+  .bar-track{flex:1; min-width:140px; height:10px; background:var(--teal-100); border-radius:999px; overflow:hidden;}
+  .bar-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--teal-500),var(--teal-700)); transition:width .4s ease;}
+  .badge{
+    font-size:13px; font-weight:700; padding:6px 14px; border-radius:999px;
+    background:var(--teal-100); color:var(--teal-700); white-space:nowrap;
+  }
+
+  section.card{
+    background:var(--paper); border:1px solid var(--line); border-radius:16px;
+    margin:20px 0; overflow:hidden; transition:box-shadow .2s ease, transform .2s ease;
+  }
+  section.card:hover{box-shadow:0 10px 26px -16px rgba(0,0,0,.28); transform:translateY(-2px);}
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:20px;}
+  .field-grid .full{grid-column:1/-1;}
+  @media (max-width:620px){ .field-grid{grid-template-columns:1fr;} }
+  label{display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:5px; font-weight:500;}
+  input[type=text], input[type=date], input[type=number], textarea, select{
+    width:100%; border:1px solid var(--line); border-radius:9px; padding:9px 11px;
+    font-family:inherit; font-size:14px; color:var(--ink); background:#fcfdfd;
+  }
+  textarea{resize:vertical; min-height:64px;}
+  input:focus, textarea:focus, select:focus{outline:2px solid var(--teal-500); outline-offset:1px; border-color:var(--teal-500);}
+
+  .crit-head{
+    background:var(--teal-700); color:#fff; padding:16px 20px;
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+  .crit-head .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.22);
+    font-size:13px; font-weight:800; margin-left:8px;
+  }
+  .crit-head h2{font-size:17px; margin:0; font-weight:800; display:flex; align-items:center;}
+  .crit-head .weight{font-size:13px; font-weight:700; background:rgba(255,255,255,.18); padding:4px 12px; border-radius:999px;}
+
+  .crit-body{padding:18px 20px 20px;}
+  .sublabel{font-size:13px; font-weight:700; color:var(--teal-700); margin:4px 0 10px;}
+
+  .evid-grid{display:grid; grid-template-columns:1fr 1fr; gap:6px 18px; margin-bottom:6px;}
+  @media (max-width:560px){ .evid-grid{grid-template-columns:1fr;} }
+  .chk{display:flex; align-items:flex-start; gap:8px; font-size:14px; padding:4px 2px; cursor:pointer;}
+  .chk input{margin-top:4px; accent-color:var(--teal-700); width:16px; height:16px; flex:none;}
+  .other-line{display:flex; align-items:center; gap:8px; margin-top:6px;}
+  .other-line input[type=text]{flex:1;}
+
+  .rate-table{width:100%; border-collapse:collapse; margin-top:6px; font-size:13.5px;}
+  .rate-table th{
+    background:var(--teal-050); color:var(--teal-900); font-weight:700; font-size:12.5px;
+    padding:8px 6px; border:1px solid var(--line);
+  }
+  .rate-table td{border:1px solid var(--line); padding:8px 8px; vertical-align:middle;}
+  .rate-table td.desc{text-align:right;}
+  .rate-table td.desc b{color:var(--teal-700);}
+  .rate-table td.pick{text-align:center; width:70px;}
+  .rate-table input[type=radio]{width:17px; height:17px; accent-color:var(--teal-700); cursor:pointer;}
+
+  .calc-box{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px;
+  }
+  @media (max-width:560px){ .calc-box{grid-template-columns:1fr;} }
+  .calc-item{
+    background:var(--teal-050); border:1px solid var(--teal-100); border-radius:10px;
+    padding:10px 12px; text-align:center;
+  }
+  .calc-item .lbl{font-size:11.5px; color:var(--ink-soft); margin-bottom:4px;}
+  .calc-item .val{font-size:18px; font-weight:800; color:var(--teal-700);}
+  .calc-item.diff .val{color:var(--red);}
+
+  .flow{
+    text-align:center; font-weight:800; color:var(--red); font-size:15px; letter-spacing:.2px;
+    padding:18px; direction:rtl;
+  }
+
+  table.final{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.final th{background:var(--teal-700); color:#fff; padding:10px 8px; font-weight:700; font-size:12.5px;}
+  table.final td{padding:10px 8px; border-bottom:1px solid var(--line); text-align:center;}
+  table.final td:first-child{text-align:right; font-weight:700;}
+  table.final tfoot td{background:var(--teal-050); font-weight:800; color:var(--teal-900); font-size:14px;}
+
+  .class-list label, .rec-list label{
+    display:flex; align-items:center; gap:8px; font-size:14px; padding:7px 4px; cursor:pointer;
+  }
+  .class-list input, .rec-list input{accent-color:var(--teal-700); width:16px; height:16px;}
+  .class-item.active{background:var(--teal-100); border-radius:8px;}
+
+  .sign-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:20px;}
+  @media (max-width:700px){ .sign-grid{grid-template-columns:1fr;} }
+  .sign-card{border:1px dashed var(--line); border-radius:12px; padding:14px; text-align:center;}
+  .sign-card .role{font-weight:800; color:var(--teal-700); font-size:14px; margin-bottom:10px;}
+  .sign-card input{margin-bottom:8px;}
+
+  .toolbar{
+    display:flex; gap:10px; flex-wrap:wrap; margin:22px 0 8px; justify-content:flex-end;
+  }
+  button{
+    font-family:inherit; font-size:14px; font-weight:700; border-radius:10px; padding:10px 18px;
+    border:1px solid var(--teal-700); cursor:pointer; transition:.15s ease;
+  }
+  .btn-primary{background:var(--teal-700); color:#fff;}
+  .btn-primary:hover{background:var(--teal-900);}
+  .btn-ghost{background:#fff; color:var(--teal-700);}
+  .btn-ghost:hover{background:var(--teal-050);}
+  .btn-danger{background:#fff; color:var(--red); border-color:var(--red);}
+  .btn-danger:hover{background:fdccea;}
+
+  .foot-note{text-align:center; font-size:12px; color:var(--ink-soft); margin-top:18px;}
+
+  @media print{
+    body{background:#fff; padding:0;}
+    .toolbar, .summary-bar{display:none !important;}
+    section.card{break-inside:avoid; box-shadow:none;}
+    .top{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <p class="school">مدرسة داؤود بن عروة الثقفي الابتدائية (بنات)</p>
+    <h1><span class="title-icon">💡</span> سجل متابعة أثر التطوير المهني للمعلمات</h1>
+    <p class="principal">مديرة المدرسة: تهاني مهنا الحجيلي</p>
+    <div class="goal"><b>الهدف:</b> متابعة أثر التطوير المهني للمعلمة من مرحلة تحديد الاحتياج حتى ظهور أثره في الممارسة التعليمية وتعلّم الطالبات، وفق معايير دقيقة تقيس نقل الخبرة الميدانية وانعكاسها على التحصيل الدراسي والمستوى المهارى للطالبات.</div>
+  </div>
+
+  <div class="note"><b>تنبيه تنظيمي:</b> يُعنى هذا السجل بكل معلمة خلال مسارها التطويري المهني (برامج تدريبية، ورش عمل، مجتمعات تعلم مهنية) لقياس مدى انتقال الأثر في الممارسة الصفية لرفع مستوى التحصيل والأداء الصفى بدقة.</div>
+
+  <div class="summary-bar">
+    <div class="score-num"><span id="scoreVal">0</span><span> / 100</span></div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="badge" id="badgeVal">لم يتم التقييم بعد</div>
+  </div>
+
+  <nav class="quicknav" id="quickNav"></nav>
+
+  <section class="card">
+    <div class="crit-head" style="background:var(--teal-900);">
+      <h2><span class="num">📋</span> 1. البيانات الأساسية للمعلمة والبرنامج</h2>
+    </div>
+    <div class="field-grid">
+      <div><label>اسم المعلمة</label><input type="text" id="teacherName"></div>
+      <div><label>المادة / التخصص</label><input type="text" id="subject"></div>
+      <div><label>الصف / المرحلة الدراسية</label><input type="text" id="grade"></div>
+      <div><label>سنوات الخبرة في التعليم</label><input type="number" id="years" min="0"></div>
+      <div class="full"><label>البرنامج / النشاط التطويري (دورة، ورشة، مجتمع تعلم مهني)</label><input type="text" id="program"></div>
+      <div><label>تاريخ بداية التطبيق والبرنامج</label><input type="date" id="dateBefore"></div>
+      <div><label>تاريخ متابعة الأثر وتطبيق القياس</label><input type="date" id="dateAfter"></div>
+      <div><label>الفصل الدراسي المستهدف</label><input type="text" id="term"></div>
+      <div><label>دورة التطوير المهني</label>
+        <select id="cycle"><option>الفصل الدراسي الأول</option><option>الفصل الدراسي الثاني</option><option>الفصل الدراسي الثالث</option></select>
+      </div>
+    </div>
+  </section>
+
+  <h2 style="font-size:17px; color:var(--teal-900); margin:22px 4px 4px;">مجالات قياس أثر التطوير المهني</h2>
+  <div id="criteriaHost"></div>
+
+  <section class="card">
+    <div class="crit-head" style="background:var(--teal-900);"><h2>معادلة حساب أثر التطوير المهني الشامل</h2></div>
+    <div class="flow">مؤشر الأثر = (درجة الممارسة بعد التدريب - درجة الممارسة قبل التدريب) × وزن المعيار والمؤشر الميداني</div>
+  </section>
+
+  <section class="card">
+    <div class="crit-head"><h2>ملخص نتائج تقييم أثر التطوير المهني الشامل</h2></div>
+    <div style="padding:18px 20px; overflow-x:auto;">
+      <table class="final">
+        <thead><tr><th>مجال القياس</th><th>الوزن</th><th>القبلية</th><th>البعدية</th><th>الفرق (+/-)</th><th>الدرجة الموزونة</th></tr></thead>
+        <tbody id="finalBody"></tbody>
+        <tfoot><tr><td colspan="5">الدرجة الكلية لأثر التطوير المهني الشامل (من 100)</td><td id="finalTotal">0</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="crit-body" style="padding-top:0;">
+      <p class="sublabel">مستوى أثر التطوير المهني وتصنيف الأداء الميداني بناءً على مؤشرات نمو الممارسة والتحصيل:</p>
+      <div class="class-list" id="classList"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="crit-head"><h2>التوصيات التشغيلية وخطط الدعم اللاحقة</h2></div>
+    <div class="crit-body">
+      <div class="rec-list" id="recList"></div>
+      <label style="margin-top:10px;">مرئيات ومقترحات إضافية للمديرة أو المشرفة:</label>
+      <textarea id="recExtra"></textarea>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="crit-head"><h2>اعتماد التقرير: التوقيعات والختم</h2></div>
+    <div class="sign-grid">
+      <div class="sign-card">
+        <div class="role">المعلمة المُنفذة</div>
+        <input type="text" placeholder="اسم المعلمة" id="signTeacher">
+        <input type="date" id="dateTeacher">
+      </div>
+      <div class="sign-card">
+        <div class="role"> الوكيلة أو المشرفة التربوية</div>
+        <input type="text" placeholder="اسم الوكيلة" id="signCoord">
+        <input type="date" id="dateCoord">
+      </div>
+      <div class="sign-card">
+        <div class="role">مديرة المدرسة</div>
+        <input type="text" value="تهاني مهنا الحجيلي" id="signPrincipal">
+        <input type="date" id="datePrincipal">
+      </div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <button class="btn-danger" id="btnClear">مسح كافة البيانات</button>
+    <button class="btn-ghost" id="btnExport">تصدير البيانات (JSON)</button>
+    <button class="btn-primary" id="btnPrint">طباعة / حفظ PDF</button>
+  </div>
+  <p class="foot-note">نظام إدارة جودة ومتابعة أثر التطوير المهني للمعلمات - الابتدائية الأولى بنات بالمدينة المنورة</p>
+
+</div>
+
+<script>
+const RATING_LEVELS = [
+  {n:5, label:"متقن تماماً", desc:"تطبيق احترافي ومستدام، يظهر أثره بوضوح تام على مهارات الطالبات ومستواهن التحصيلي"},
+  {n:4, label:"متقن", desc:"تطبيق جيد وفعال، يظهر أثره على تفاعل ومشاركة الطالبات بصورة مستمرة"},
+  {n:3, label:"متوسط", desc:"تطبيق جزئي يحتاج لتعزيز واستمرارية في الممارسة"},
+  {n:2, label:"دون المستوى", desc:"تطبيق محدود يفتقر للمتابعة والفاعلية المطلوبة داخل الفصل"},
+  {n:1, label:"غير متقن", desc:"لم يظهر أي أثر عملي للتطوير المهني في الممارسة التدريسية"},
+];
+
+const CRITERIA = [
+  { key:"need", title:"1. تحديد الاحتياج التدريبي الحقيقي", weight:20, color:"#6d28d9", soft:"#f2ecfd", icon:"🎯",
+    items:["ربط الاحتياج بنتائج تقويم الأداء وظهور فجوات التعلم","تحليل نتائج اختبارات نافس والاختبارات التشكيلية بدقة","تحديد الاحتياج بناءً على مستهدفات الخطة التشغيلية للمدرسة","اختيار البرنامج التدريبي المناسب لطبيعة المنهج والمادة","الوعي بمجالات التطوير الذاتي والمهني اللازمة","تحديد الاحتياج بما يعالج الصعوبات المهارية لدى الطالبات","تحديد الاحتياج بالتكامل مع الزميلات في مجتمعات التعلم المهني"] },
+  { key:"activity", title:"2. المشاركة الإيجابية في النشاط التطويري", weight:20, color:"#1d4ed8", soft:"#e9f0ff", icon:"🚀",
+    items:["الحضور الفعال والمشاركة في النقاشات وورش العمل","الاستفادة من التطبيقات الرقمية واستراتيجيات التدريس الحديثة","التعاون مع الزميلات لتبادل الخبرات الناجحة","توظيف الحقائب التدريبية والمراجع العلمية بفاعلية","الالتزام بمتطلبات وحزمة برامج التطوير المهني المعتمدة","التفاعل مع أوراق العمل والأنشطة المصاحبة للبرنامج","استثمار المنصات التعليمية الرقمية المتاحة"] },
+  { key:"skill", title:"3. اكتساب المعرفة أو المهارة الجديدة", weight:15, color:"#0f766e", soft:"#e5f6f4", icon:"💡",
+    items:["فهم واستيعاب المهارات الجديدة المراد تطبيقها","تنوع وتكامل أساليب التدريس المكتسبة في البرامج","القدرة على توظيف أدوات تقويم الأداء (Rubric)","الوعي بطرق تحفيز التفكير الناقد والإبداعي لدى الطالبات","التمكن من توظيف التقنية الحديثة لخدمة أهداف الدرس","القدرة على تصميم أنشطة صفية جاذبة ومحفزة للتعلم"] },
+  { key:"apply", title:"4. التطبيق الفعلي في الممارسة الصفية وتعلّم الطالبات", weight:30, color:"#b45309", soft:"#fdf1e0", icon:"⭐",
+    items:["ترجمة المهارات المكتسبة إلى ممارسات تدريسية ملموسة داخل الصف","تنفيذ استراتيجيات تعلم نشط تسهم في رفع تفاعل الطالبات","استخدام أدوات تقويم مستمر تقيس أثر التعلم بدقة","ملاحظة تحسن ملحوظ في المشاركة الصفية ومستوى الانضباط الإيجابي","تفعيل التعاون ومجموعات العمل بين الطالبات بفاعلية","توفير بيئة تعليمية محفزة وداعمة للابتكار والتميز","رصد تقدم مستويات الطالبات الضعيفات وعلاج الفاقد التعليمي"] },
+  { key:"impact", title:"5. أثر التطوير المهني في نواتج تعلّم الطالبات", weight:15, color:"#be123c", soft:"#fde8ec", icon:"📈",
+    items:["ارتفاع معدلات التحصيل الدراسي والدرجات في التقييمات المستمرة","ظهور أثر التدريب في مهارات القراءة والكتابة والحساب الأساسية","زيادة دافعية الطالبات نحو التعلم والمشاركة الفاعلة بالأنشطة","تقليل الفاقد التعليمي وتحسن مستويات الطالبات المتأخرات دراسياً","تفاعل أولياء الأمور الإيجابي مع التحسن الملحوظ في مستوى بناتهن","تحقيق مستهدفات مؤشرات الأداء الخاصة بالمادة والتحصيل الدراسي"] }
+];
+
+const CLASSIFICATIONS = [
+  {min:90, max:100, label:"90 – 100: أثر فائق ومستدام – نقل أثر التدريب بدرجة عالية وانعكاسه على تميز الطالبات"},
+  {min:75, max:89.99, label:"75 – 89: أثر عالٍ وجيد جداً – ممارسة مهنية متطورة ومستوى تحصيلي مرتفع"},
+  {min:60, max:74.99, label:"60 – 74: أثر متوسط – استمرار الحاجة لبرامج دعم وتوجيه إضافية"},
+  {min:40, max:59.99, label:"40 – 59: أثر ضعيف – تطلب خطة علاجية وتدخل إشرافي مباشر"},
+  {min:0,  max:39.99, label:"0 – 39: لم يظهر أثر – تدني واضح يستوجب إعادة التأهيل المهني"},
+];
+
+const RECOMMENDATIONS = [
+  "تكريم المعلمة المتميزة في حفل التميز المدرسي ونشر ممارستها الصفية الناجحة",
+  "تقديم دعم إضافي للمعلِمات اللاتي لم يظهر أثر التدريب لديهن بشكل كافٍ",
+  "عقد جلسات تبادل خبرات وزيارات صفية متبادلة لنقل أثر الممارسة الناجحة",
+  "توجيه المعلمة لحضور ورش تخصصية متقدمة في مجال الفجوة المهارية المرصودة",
+  "متابعة الخطة العلاجية الفردية للطالبات اللاتي تأثرن إيجابياً بالبرنامج التدريبي"
+];
+
+const host = document.getElementById("criteriaHost");
+
+CRITERIA.forEach((c, idx) => {
+  const sec = document.createElement("section");
+  sec.className = "card";
+  sec.id = `sec_${c.key}`;
+  sec.innerHTML = `
+    <div class="crit-head" style="background:${c.color};">
+      <h2><span class="num">${c.icon}</span> ${idx+1}. ${c.title}</h2>
+      <span class="weight">الوزن النسبي: ${c.weight}%</span>
+    </div>
+    <div class="crit-body">
+      <p class="sublabel">مؤشرات الأداء وشواهد التطبيق (حدد الشواهد المتوفرة ميدانياً بدقة):</p>
+      <div class="evid-grid">
+        ${c.items.map((it,i)=>`<label class="chk"><input type="checkbox" data-ev="${c.key}-${i}"> ${it}</label>`).join("")}
+      </div>
+      <div class="other-line"><label class="chk" style="padding:0;"><input type="checkbox" data-ev="${c.key}-other"> أُخرى:</label><input type="text" data-evtext="${c.key}"></div>
+
+      <p class="sublabel" style="margin-top:16px;">مقياس أثر التطوير المهني في الممارسة وتعلّم الطالبات:</p>
+      <div style="overflow-x:auto;">
+      <table class="rate-table">
+        <thead><tr><th>مستوى الأثر وتوصيف الممارسة</th><th>قبل البرنامج التدريبي</th><th>بعد تطبيق البرنامج</th></tr></thead>
+        <tbody>
+          ${RATING_LEVELS.map(lv=>`
+            <tr>
+              <td class="desc"><b>${lv.n} – ${lv.label}:</b>${lv.desc}</td>
+              <td class="pick"><input type="radio" name="${c.key}_before" value="${lv.n}"></td>
+              <td class="pick"><input type="radio" name="${c.key}_after" value="${lv.n}"></td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+      </div>
+
+      <div class="calc-box">
+        <div class="calc-item"><div class="lbl">مؤشر الأثر قبل البرنامج</div><div class="val" id="${c.key}_scoreBefore">0.0</div></div>
+        <div class="calc-item"><div class="lbl">مؤشر الأثر بعد البرنامج</div><div class="val" id="${c.key}_scoreAfter">0.0</div></div>
+        <div class="calc-item diff"><div class="lbl">مقدار النمو والفرق</div><div class="val" id="${c.key}_diff">0.0</div></div>
+      </div>
+
+      <label style="margin-top:16px;">مرئيات وتطبيقات عملية / أو جوانب دعم إضافية مطلوبة:</label>
+      <textarea data-note="${c.key}"></textarea>
+    </div>
+  `;
+  host.appendChild(sec);
+});
+
+const navHost = document.getElementById("quickNav");
+CRITERIA.forEach(c=>{
+  const a = document.createElement("a");
+  a.href = `#sec_${c.key}`;
+  a.id = `nav_${c.key}`;
+  a.style.color = c.color;
+  a.style.borderColor = c.color + "40";
+  a.innerHTML = `<span class="dot"></span>${c.icon} ${c.title}`;
+  navHost.appendChild(a);
+});
+
+const finalBody = document.getElementById("finalBody");
+CRITERIA.forEach(c=>{
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${c.title}</td><td>${c.weight}%</td>
+    <td id="fin_${c.key}_b">—</td><td id="fin_${c.key}_a">—</td><td id="fin_${c.key}_d">—</td><td id="fin_${c.key}_s">0.0</td>`;
+  finalBody.appendChild(tr);
+});
+
+const classHost = document.getElementById("classList");
+CLASSIFICATIONS.forEach((cl,i)=>{
+  const lbl = document.createElement("label");
+  lbl.className = "class-item";
+  lbl.innerHTML = `<input type="radio" name="classification" value="${i}"> ${cl.label}`;
+  classHost.appendChild(lbl);
+});
+
+const recHost = document.getElementById("recList");
+RECOMMENDATIONS.forEach((r,i)=>{
+  const lbl = document.createElement("label");
+  lbl.innerHTML = `<input type="checkbox" data-rec="${i}"> ${r}`;
+  recHost.appendChild(lbl);
+});
+
+function calc(){
+  let total = 0;
+  CRITERIA.forEach(c=>{
+    const bEl = document.querySelector(`input[name="${c.key}_before"]:checked`);
+    const aEl = document.querySelector(`input[name="${c.key}_after"]:checked`);
+    const b = bEl ? Number(bEl.value) : null;
+    const a = aEl ? Number(aEl.value) : null;
+    const scoreB = b ? (b/5)*c.weight : 0;
+    const scoreA = a ? (a/5)*c.weight : 0;
+    const diff = (b && a) ? (scoreA - scoreB) : null;
+
+    document.getElementById(`${c.key}_scoreBefore`).textContent = scoreB.toFixed(1);
+    document.getElementById(`${c.key}_scoreAfter`).textContent = scoreA.toFixed(1);
+    document.getElementById(`${c.key}_diff`).textContent = diff===null ? "0.0" : (diff>=0?"+":"")+diff.toFixed(1);
+
+    document.getElementById(`fin_${c.key}_b`).textContent = b ?? "—";
+    document.getElementById(`fin_${c.key}_a`).textContent = a ?? "—";
+    document.getElementById(`fin_${c.key}_d`).textContent = diff===null ? "—" : (diff>=0?"+":"")+diff.toFixed(1);
+    document.getElementById(`fin_${c.key}_s`).textContent = scoreA.toFixed(1);
+
+    const navLink = document.getElementById(`nav_${c.key}`);
+    if(navLink) navLink.classList.toggle("done", !!(b && a));
+
+    total += scoreA;
+  });
+
+  document.getElementById("scoreVal").textContent = total.toFixed(1);
+  document.getElementById("finalTotal").textContent = total.toFixed(1);
+  document.getElementById("barFill").style.width = Math.min(total,100) + "%";
+
+  const badge = document.getElementById("badgeVal");
+  const barFill = document.getElementById("barFill");
+  const found = CLASSIFICATIONS.find(cl=>total>=cl.min && total<=cl.max);
+  let levelColor = "#158f89", levelSoft = "#e5f3f2";
+  if(total>=90){ levelColor="#16a34a"; levelSoft="#e7f7ed"; }
+  else if(total>=75){ levelColor="#0f766e"; levelSoft="#e5f6f4"; }
+  else if(total>=60){ levelColor="#1d4ed8"; levelSoft="#e9f0ff"; }
+  else if(total>=40){ levelColor="#b45309"; levelSoft="#fdf1e0"; }
+  else if(total>0){ levelColor="#be123c"; levelSoft="#fde8ec"; }
+  badge.style.background = levelSoft;
+  badge.style.color = levelColor;
+  barFill.style.background = `linear-gradient(90deg, ${levelColor}aa, ${levelColor})`;
+  if(total===0){
+    badge.textContent = "لم يتم تقييم أثر التطوير بعد";
+  } else if(found){
+    badge.textContent = found.label.split("–")[1]?.trim() || found.label;
+    if(!window.__classManual){
+      const idx = CLASSIFICATIONS.indexOf(found);
+      const radio = document.querySelector(`input[name="classification"][value="${idx}"]`);
+      if(radio) radio.checked = true;
+    }
+  }
+  saveDraft();
+}
+
+document.addEventListener("change", (e)=>{
+  if(e.target.name === "classification"){ window.__classManual = true; }
+  calc();
+});
+document.addEventListener("input", calc);
+
+const STORAGE_KEY = "pd_impact_log_draft_v1";
+
+function collectState(){
+  const state = {inputs:{}, checks:{}, radios:{}, texts:{}, notes:{}};
+  document.querySelectorAll("input[type=text], input[type=date], input[type=number], select").forEach(el=>{
+    if(el.id) state.inputs[el.id] = el.value;
+  });
+  document.querySelectorAll("input[type=checkbox]").forEach(el=>{
+    const key = el.dataset.ev || el.dataset.rec;
+    if(key !== undefined) state.checks[key] = el.checked;
+  });
+  document.querySelectorAll("input[type=radio]").forEach(el=>{
+    if(el.checked) state.radios[el.name] = el.value;
+  });
+  document.querySelectorAll("input[data-evtext]").forEach(el=>{
+    state.texts[el.dataset.evtext] = el.value;
+  });
+  document.querySelectorAll("textarea[data-note]").forEach(el=>{
+    state.notes[el.dataset.note] = el.value;
+  });
+  const recExtra = document.getElementById("recExtra");
+  if(recExtra) state.inputs["recExtra"] = recExtra.value;
+  state.classManual = !!window.__classManual;
+  return state;
+}
+
+function saveDraft(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); }catch(e){}
+}
+
+function restoreDraft(){
+  let raw;
+  try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){ return; }
+  if(!raw) return;
+  let state;
+  try{ state = JSON.parse(raw); }catch(e){ return; }
+
+  Object.entries(state.inputs||{}).forEach(([id,val])=>{
+    const el = document.getElementById(id);
+    if(el) el.value = val;
+  });
+  document.querySelectorAll("input[type=checkbox]").forEach(el=>{
+    const key = el.dataset.ev || el.dataset.rec;
+    if(key !== undefined && state.checks && state.checks[key] !== undefined) el.checked = state.checks[key];
+  });
+  Object.entries(state.radios||{}).forEach(([name,val])=>{
+    const el = document.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(el) el.checked = true;
+  });
+  document.querySelectorAll("input[data-evtext]").forEach(el=>{
+    const v = state.texts && state.texts[el.dataset.evtext];
+    if(v) el.value = v;
+  });
+  document.querySelectorAll("textarea[data-note]").forEach(el=>{
+    const v = state.notes && state.notes[el.dataset.note];
+    if(v) el.value = v;
+  });
+  window.__classManual = !!state.classManual;
+  calc();
+}
+
+document.getElementById("btnClear").addEventListener("click", ()=>{
+  if(!confirm("هل أنت متأكد من مسح جميع بيانات السجل وإعادة التعيين؟")) return;
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  location.reload();
+});
+
+document.getElementById("btnPrint").addEventListener("click", ()=> window.print());
+
+document.getElementById("btnExport").addEventListener("click", ()=>{
+  const state = collectState();
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const name = (state.inputs.teacherName || "سجل_أثر_التطوير_المهني").trim() || "سجل_أثر_التطوير_المهني";
+  a.href = url; a.download = `${name}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+
+restoreDraft();
+calc();
+</script>
+</body>
+</html>
