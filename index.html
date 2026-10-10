@@ -7,6 +7,9 @@
     <!-- استدعاء مكتبة التصميم السريع Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        #bgCanvas { z-index: 0; }
+body > *:not(#bgCanvas) { position: relative; z-index: 1; }
+#bottomIconNav, #loginModal, .fixed { position: fixed; }
         .bg-theme-blue {
             background: linear-gradient(150deg, #0b1330 0%, #131c47 35%, #1c2a5e 65%, #26346f 100%) !important;
         }
