@@ -3199,7 +3199,7 @@ async function installApp() {
     }
 }
 
-applyGender();
+try { applyGender(); } catch (e) { console.error(e); }
 
         loadDataLocally();
         document.addEventListener('DOMContentLoaded', function () {
