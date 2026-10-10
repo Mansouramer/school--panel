@@ -144,12 +144,12 @@
                 <div class="text-[9px] text-gray-500">The First Primary School for Girls</div>
             </div>
             <div class="text-center">
-                <div class="font-bold text-xs text-emerald-800">وزارة التعليم</div>
+                <div class="font-bold text-xs text-emerald-800">المملكة العربية السعودية</div>
                 <div class="text-[9px] text-gray-500">Ministry of Education</div>
             </div>
             <div class="text-left font-bold text-xs leading-tight">
-                <div>المملكة العربية السعودية</div>
-                <div>وزارة التعليم </div>
+                <div>وزارة التعليم</div>
+                <div>المملكة العربية السعودية </div>
             </div>
         </div>
         <div id="printBodyContent" class="my-4"></div>
@@ -283,7 +283,7 @@
     <!-- رأس الصفحة -->
     <header class="mb-4 bg-white/60 backdrop-blur-md p-3 sm:p-6 rounded-2xl shadow-sm border-r-4 border-blue-600 flex flex-col lg:flex-row justify-between items-center gap-4 border border-white/40 no-print">
         <div class="text-right w-full lg:w-auto">
-            <div id="schoolHeaderLabel" class="text-[11px] sm:text-xs text-blue-700 font-bold mb-1">وزارة التعليم | إدارة التعليم بالمدينة المنورة | الابتدائية الأولى بنات</div>
+            <div id="schoolHeaderLabel" class="text-[11px] sm:text-xs text-blue-700 font-bold mb-1">المملكة العربية السعودية |وزارة التعليم| الابتدائية الأولى بنات</div>
             <h1 class="text-lg sm:text-2xl font-bold text-gray-900">النظام الشامل لإدارة المدرسة والسجلات</h1>
             <p id="principalHeaderLabel" class="text-xs sm:text-sm text-indigo-800 mt-1 font-bold">مديرة المدرسة / فلانة</p>
         </div>
@@ -1792,7 +1792,7 @@ const schoolConfig = {
     setTxt('.print-footer div:nth-child(1)', 'المدرسة : ' + schoolConfig.schoolName);
     setTxt('.print-footer div:nth-child(3)', 'مديرة المدرسة : ' + (cfg.principal || ''));
     document.title = schoolConfig.schoolName;
-            document.getElementById('schoolHeaderLabel').innerText = "وزارة التعليم | إدارة التعليم بالمدينة المنورة | " + schoolConfig.schoolName;
+            document.getElementById('schoolHeaderLabel').innerText = "المملكة العربية السعودية | وزارة التعليم | " + schoolConfig.schoolName;
             document.getElementById('principalHeaderLabel').innerText = schoolConfig.developerName;
 
             const saved = localStorage.getItem('dawood_school_system_backup');
@@ -3204,7 +3204,7 @@ try { applyGender(); } catch (e) { console.error(e); }
     try {
         const a = document.getElementById('schoolHeaderLabel');
         const b = document.getElementById('principalHeaderLabel');
-        if (a) a.innerText = 'وزارة التعليم | إدارة التعليم بالمدينة المنورة | ' + schoolConfig.schoolName;
+        if (a) a.innerText = 'المملكة العربية السعودية| إوزارة التعليم | ' + schoolConfig.schoolName;
         if (b) b.innerText = schoolConfig.developerName;
         const setTxt = (sel, t) => { const e = document.querySelector(sel); if (e) e.innerText = t; };
         setTxt('#loginModal h2', schoolConfig.schoolName);
