@@ -7,10 +7,8 @@
     <!-- استدعاء مكتبة التصميم السريع Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        #bgCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-#pageBody > *:not(#bgCanvas) { position: relative; z-index: 1; }
-#bottomIconNav { position: fixed; z-index: 40; }
-.fixed { position: fixed; }
+       .bg-theme-blue, .bg-theme-emerald, .bg-theme-amber { background-size: 300% 300% !important; animation: bgMove 18s ease infinite; }
+@keyframes bgMove { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
                .bg-theme-blue {
             background: linear-gradient(150deg, #0b1330 0%, #131c47 35%, #1c2a5e 65%, #26346f 100%) !important;
         }
