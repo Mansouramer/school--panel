@@ -644,19 +644,11 @@
 
     <!-- السكريبت البرمجي -->
     <script>
-       const cfg = window.cfg || {
-  school: "الابتدائية الأولى بنات",
-  gender: "female",
-  principal: "فلانة",
-  cloudUrl: "https://script.google.com/macros/s/AKfycbzlcaDZs4GC-Cr4Ik1-V-DY7WDP5mhePH4u8lwoBngrWCG3RFJzEXbbhIqM7OchQCrIwQ/exec",
-  prefix: ""
-};
-
+      const cfg = window.SCHOOL_CFG || {};
 const schoolConfig = {
-    schoolName: cfg.school,
-    developerName: "مديرة المدرسة / " + cfg.principal
+    schoolName: cfg.school || "الابتدائية الأولى بنات",
+    developerName: "مديرة المدرسة / " + (cfg.principal || "فلانة")
 };
-
         const rolePasswords = {
             "principal": "12345",
             "counselor": "5555",
