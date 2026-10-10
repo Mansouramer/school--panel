@@ -3218,6 +3218,44 @@ applyGender();
     } catch (e) { console.error(e); }
 });
         (function () {
+    function addNameBg() {
+        if (document.getElementById('nameBg')) return;
+
+        const st = document.createElement('style');
+        st.textContent = `
+            #nameBg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+            #nameBg .nb{position:absolute;white-space:nowrap;font-weight:900;
+                color:rgba(231,198,117,.07);user-select:none;
+                animation:nbFloat linear infinite;}
+            @keyframes nbFloat{from{transform:translateX(-30%)}to{transform:translateX(30%)}}
+            @media print{#nameBg{display:none!important}}
+        `;
+        document.head.appendChild(st);
+
+        const box = document.createElement('div');
+        box.id = 'nameBg';
+        const school = schoolConfig.schoolName;
+        const principal = cfg.principal || '';
+        const lines = [school, principal ? 'مديرة المدرسة / ' + principal : ''];
+
+        for (let i = 0; i < 7; i++) {
+            const d = document.createElement('div');
+            d.className = 'nb';
+            d.textContent = lines[i % 2] || school;
+            d.style.top = (i * 14 + 2) + '%';
+            d.style.right = (i % 2 ? '-5%' : '5%');
+            d.style.fontSize = (34 + (i % 3) * 8) + 'px';
+            d.style.animationDuration = (40 + i * 7) + 's';
+            d.style.animationDirection = i % 2 ? 'alternate' : 'alternate-reverse';
+            box.appendChild(d);
+        }
+        document.body.insertBefore(box, document.body.firstChild);
+    }
+    if (document.readyState === 'loading')
+        document.addEventListener('DOMContentLoaded', addNameBg);
+    else addNameBg();
+})();
+        (function () {
     const c = document.createElement('canvas');
     c.id = 'bgCanvas';
     c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;';
