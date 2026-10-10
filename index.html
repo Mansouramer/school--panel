@@ -3172,7 +3172,7 @@ const v = genderize(n.__o);
     document.querySelectorAll('[placeholder],[title]').forEach(el => {
         ['placeholder', 'title'].forEach(a => {
             if (!el.hasAttribute(a)) return;
-            if (el['o_' + a] === undefined) el['o_' + a] = el.getAttribute(a);
+          if (el['__o_' + a] === undefined) el['__o_' + a] = el.getAttribute(a);
             el.setAttribute(a, genderize(el['__o_' + a]));
         });
     });
