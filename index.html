@@ -3165,8 +3165,8 @@ function applyGender() {
     });
     let n;
     while ((n = tw.nextNode())) {
-        if (n.o === undefined) n.o = n.nodeValue;
-        const v = genderize(n.__o);
+       if (n.__o === undefined) n.__o = n.nodeValue;
+const v = genderize(n.__o);
         if (v !== n.nodeValue) n.nodeValue = v;
     }
     document.querySelectorAll('[placeholder],[title]').forEach(el => {
