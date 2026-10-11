@@ -2115,7 +2115,7 @@ async function uploadImage(dataUrl) {
                 for (let file of files) {
                     const reader = new FileReader();
                     reader.onload = async function(e) {
-                        const compressed = await compressImage(e.target.result);
+                        const compressed = await uploadImage(await compressImage(e.target.result));
                         const now = new Date();
                         const formattedDate = now.toLocaleDateString('ar-SA') + ' | ' + now.toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'});
                         teacherEvImagesList.push({ src: compressed, date: formattedDate });
@@ -2774,7 +2774,7 @@ async function uploadImage(dataUrl) {
                 for (let file of files) {
                     const reader = new FileReader();
                     reader.onload = async function(e) {
-                        const compressed = await compressImage(e.target.result);
+                        const compressed = await uploadImage(await compressImage(e.target.result));
                         const now = new Date();
                         const formattedDate = now.toLocaleDateString('ar-SA') + ' | ' + now.toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'});
                         currentImagesList.push({ src: compressed, date: formattedDate });
@@ -2793,7 +2793,7 @@ async function uploadImage(dataUrl) {
                 for (let file of files) {
                     const reader = new FileReader();
                     reader.onload = async function(e) {
-                        const compressed = await compressImage(e.target.result);
+                        const compressed = await uploadImage(await compressImage(e.target.result));
                         const now = new Date();
                         const formattedDate = now.toLocaleDateString('ar-SA') + ' | ' + now.toLocaleTimeString('ar-SA', {hour: '2-digit', minute:'2-digit'});
                         progImagesList.push({ src: compressed, date: formattedDate });
@@ -2977,7 +2977,7 @@ async function uploadImage(dataUrl) {
             for (let file of files) {
                 const reader = new FileReader();
                 reader.onload = async function (e) {
-                    const compressed = await compressImage(e.target.result);
+                    const compressed = await uploadImage(await compressImage(e.target.result));
                     const now = new Date();
                     const formattedDate = now.toLocaleDateString('ar-SA') + ' | ' + now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
                     if (!sustainabilityRecords[idx].images) sustainabilityRecords[idx].images = [];
