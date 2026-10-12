@@ -1672,31 +1672,37 @@ const schoolConfig = {
             else switchSection('teacherPerf');
         }
 
-        const ROLE_KEYS = {
-  schoolAffairs:  ['schoolAffairsRecordsData'],
-  eduAffairs:     ['eduAffairsRecordsData'],
-  counselor:      ['counselorRecordsData'],
-  studentAffairs: ['studentAffairsRecordsData'],
-  evalSpecialist: ['evalSpecialistRecordsData'],
-  teacher:        ['teachersPerformanceData'],
-  principal: ['principalRecordsData','professionalDevRecordsData','teacherPerfRecordsData',
-              'schoolAffairsRecordsData','eduAffairsRecordsData','counselorRecordsData',
-              'studentAffairsRecordsData','evalSpecialistRecordsData','records','programs',
-              'readinessData','teachersPerformanceData','sustainabilityRecords']
-};
+       let lastSynced = {};
+let cloudBaselineReady = false;
+
+function snapshotKeys() {
+    const all = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, teachersPerformanceData, sustainabilityRecords };
+    const out = {};
+    Object.keys(all).forEach(k => out[k] = JSON.stringify(all[k]));
+    Object.keys(readinessData).forEach(s => out['readinessData::' + s] = JSON.stringify(readinessData[s]));
+    return out;
+}
+
+function markSynced() { lastSynced = snapshotKeys(); cloudBaselineReady = true; }
 
 function saveDataLocally() {
-    const all = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, readinessData, teachersPerformanceData, sustainabilityRecords };
-    try {
-        localStorage.setItem(K_BACKUP, JSON.stringify(all));
-        if (!GOOGLE_DRIVE_WEB_APP_URL) return;
-        (ROLE_KEYS[activeUserRole] || []).forEach(k => {
-            fetch(GOOGLE_DRIVE_WEB_APP_URL, {
-                method: 'POST', mode: 'no-cors',
-                body: JSON.stringify({ type: 'SECTION_SAVE', key: k, data: all[k] })
-            }).catch(() => {});
-        });
-    } catch (e) {}
+    if (!GOOGLE_DRIVE_WEB_APP_URL) { console.warn('رابط السحابة فارغ'); return; }
+    if (!cloudBaselineReady) { console.warn('لم يتم الجلب من السحابة بعد، تم إيقاف الحفظ'); return; }
+
+    const now = snapshotKeys();
+    Object.keys(now).forEach(k => {
+        if (now[k] === lastSynced[k]) return;
+        let key = k, data = JSON.parse(now[k]);
+        if (k.startsWith('readinessData::')) {
+            key = 'readinessData';
+            data = { [k.split('::')[1]]: data };
+        }
+        fetch(GOOGLE_DRIVE_WEB_APP_URL, {
+            method: 'POST', mode: 'no-cors',
+            body: JSON.stringify({ type: 'SECTION_SAVE', key, data })
+        }).then(() => { lastSynced[k] = now[k]; })
+          .catch(err => console.error('فشل الحفظ السحابي', k, err));
+    });
 }
 
         function resetDefaultData() {
