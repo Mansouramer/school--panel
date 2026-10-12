@@ -1837,18 +1837,7 @@ function saveDataLocally() {
             const savedBg = localStorage.getItem('school_bg_pattern');
             if(savedBg) changeBackground(savedBg);
         }
-
-        function exportDataFile() {
-            const dataToSave = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, readinessData, teachersPerformanceData, sustainabilityRecords };
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToSave, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "Dawood_School_Backup_2026.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
+       
         function changeBackground(type) {
             const body = document.getElementById('pageBody');
             body.classList.remove('bg-theme-blue', 'bg-theme-emerald', 'bg-theme-amber');
