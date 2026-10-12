@@ -1798,7 +1798,7 @@ function saveDataLocally() {
                         parsed.readinessData[key].tasks = fixImages(parsed.readinessData[key].tasks);
                     }
                 }
-                readinessData = parsed.readinessData;
+             readinessData = Object.assign({}, readinessData, parsed.readinessData);
             }
         }
 
