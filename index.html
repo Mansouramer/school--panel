@@ -1729,17 +1729,14 @@ function saveDataLocally() {
             reader.readAsText(file);
         }
 
-        async function syncDataFromCloud() {
-            try {
-                const response = await fetch(GOOGLE_DRIVE_WEB_APP_URL);
-                const cloudData = await response.json();
-                if (cloudData && cloudData.dataToSave) {
-                    const parsed = cloudData.dataToSave;
-                    applyLoadedData(parsed);
-                    localStorage.setItem('dawood_school_system_backup', JSON.stringify(parsed));
-                }
-            } catch(e) {}
-        }
+       async function syncDataFromCloud() {
+    try {
+        const response = await fetch(GOOGLE_DRIVE_WEB_APP_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        const cloudData = await response.json();
+        if (cloudData && cloudData.dataToSave) applyLoadedData(cloudData.dataToSave);
+        markSynced();
+    } catch (e) { console.warn('تعذر جلب السحابة', e); }
+}
 
         async function manualSyncFromCloud() {
             const btn = event.target;
