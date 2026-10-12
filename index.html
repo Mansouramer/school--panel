@@ -1672,17 +1672,32 @@ const schoolConfig = {
             else switchSection('teacherPerf');
         }
 
-        function saveDataLocally() {
-            const dataToSave = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, readinessData, teachersPerformanceData, sustainabilityRecords };
-            try {
-                localStorage.setItem('dawood_school_system_backup', JSON.stringify(dataToSave));
-                fetch(GOOGLE_DRIVE_WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({ type: 'FULL_BACKUP', data: dataToSave })
-                }).catch(e => {});
-            } catch(e) {}
-        }
+        const ROLE_KEYS = {
+  schoolAffairs:  ['schoolAffairsRecordsData'],
+  eduAffairs:     ['eduAffairsRecordsData'],
+  counselor:      ['counselorRecordsData'],
+  studentAffairs: ['studentAffairsRecordsData'],
+  evalSpecialist: ['evalSpecialistRecordsData'],
+  teacher:        ['teachersPerformanceData'],
+  principal: ['principalRecordsData','professionalDevRecordsData','teacherPerfRecordsData',
+              'schoolAffairsRecordsData','eduAffairsRecordsData','counselorRecordsData',
+              'studentAffairsRecordsData','evalSpecialistRecordsData','records','programs',
+              'readinessData','teachersPerformanceData','sustainabilityRecords']
+};
+
+function saveDataLocally() {
+    const all = { principalRecordsData, professionalDevRecordsData, teacherPerfRecordsData, schoolAffairsRecordsData, eduAffairsRecordsData, counselorRecordsData, studentAffairsRecordsData, evalSpecialistRecordsData, records, programs, readinessData, teachersPerformanceData, sustainabilityRecords };
+    try {
+        localStorage.setItem(K_BACKUP, JSON.stringify(all));
+        if (!GOOGLE_DRIVE_WEB_APP_URL) return;
+        (ROLE_KEYS[activeUserRole] || []).forEach(k => {
+            fetch(GOOGLE_DRIVE_WEB_APP_URL, {
+                method: 'POST', mode: 'no-cors',
+                body: JSON.stringify({ type: 'SECTION_SAVE', key: k, data: all[k] })
+            }).catch(() => {});
+        });
+    } catch (e) {}
+}
 
         function resetDefaultData() {
             if(confirm('هل أنت متأكد من إعادة ضبط البيانات واستعادة السجلات الافتراضية؟ سيتم تحديث الصفحة.')) {
