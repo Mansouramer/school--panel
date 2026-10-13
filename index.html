@@ -1731,7 +1731,8 @@ function saveDataLocally() {
 
        async function syncDataFromCloud() {
     try {
-        const response = await fetch(GOOGLE_DRIVE_WEB_APP_URL + '?t=' + Date.now(), { cache: 'no-store' });
+       const driveUrl = (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) || localStorage.getItem('schoolDriveUrl');
+    const response = await fetch(driveUrl + '?t=' + Date.now(), { cache: 'no-store' });
         const cloudData = await response.json();
         if (cloudData && cloudData.dataToSave) applyLoadedData(cloudData.dataToSave);
         markSynced();
