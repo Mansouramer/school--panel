@@ -1731,10 +1731,10 @@ function saveDataLocally() {
 
        async function syncDataFromCloud() {
     try {
-       const driveUrl = (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) || localStorage.getItem('schoolDriveUrl');
-    const response = await fetch(driveUrl + '?t=' + Date.now(), { cache: 'no-store' });
+        const driveUrl = (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) || localStorage.getItem('schoolDriveUrl');
+        const response = await fetch(driveUrl + '?t=' + Date.now(), { cache: 'no-store' });
         const cloudData = await response.json();
-       if (cloudData && cloudData.dataToSave) applyLoadedData(cloudData.dataToSave);
+        if (cloudData && cloudData.dataToSave) applyLoadedData(cloudData.dataToSave);
     } catch (e) { console.warn('تعذر جلب السحابة', e); }
 }
 
