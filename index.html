@@ -1833,7 +1833,13 @@ function saveDataLocally() {
                 document.getElementById('loginModal').classList.remove('hidden');
                 document.getElementById('loginModal').classList.add('flex');
             }
+// حفظ رابط الدرايف الممرر من السيرفر محلياً قبل المزامنة لضمان عدم ضياعه
+if (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) {
+    localStorage.setItem('schoolDriveUrl', window.SCHOOL_CFG.driveUrl);
+}
 
+await syncDataFromCloud();
+renderTable();
             await syncDataFromCloud();
             renderTable();
 
