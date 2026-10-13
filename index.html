@@ -1729,12 +1729,14 @@ function saveDataLocally() {
             reader.readAsText(file);
         }
 
-       async function syncDataFromCloud() {
+      async function syncDataFromCloud() {
     try {
         const driveUrl = (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) || localStorage.getItem('schoolDriveUrl');
+        if (!driveUrl) return;
         const response = await fetch(driveUrl + '?t=' + Date.now(), { cache: 'no-store' });
         const cloudData = await response.json();
         if (cloudData && cloudData.dataToSave) applyLoadedData(cloudData.dataToSave);
+        markSynced(); // ← هذا السطر المفقود، وبه يبدأ الحفظ
     } catch (e) { console.warn('تعذر جلب السحابة', e); }
 }
 
