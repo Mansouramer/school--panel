@@ -2682,6 +2682,17 @@ async function uploadImage(dataUrl) {
 
         function switchSection(section) {
             currentSection = section;
+                        // إظهار/إخفاء صفحة التطوير (iframe)
+            const pdBox = document.getElementById('pdImpactContainer');
+            const tblBox = document.getElementById('tableContainer');
+            if (pdBox) pdBox.style.display = (section === 'pdImpact') ? 'block' : 'none';
+            if (section === 'pdImpact') {
+                if (tblBox) tblBox.style.display = 'none';
+                document.querySelectorAll('.bnav-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-sec') === section));
+                return; // لا نستدعي renderTable لهذا القسم
+            } else if (tblBox) {
+                tblBox.style.display = '';
+            }
             ALL_DROPDOWN_IDS.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) el.classList.add('hidden');
