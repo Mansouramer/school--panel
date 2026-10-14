@@ -1855,11 +1855,7 @@ if (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) {
             window.print();
         }
 
-        function updateDashboardStats() {
-            document.getElementById('stat-programs').innerText = programs.length;
-            document.getElementById('stat-records').innerText = records.length + principalRecordsData.length + professionalDevRecordsData.length;
-            document.getElementById('stat-active').innerText = programs.filter(p => p.status === 'قيد التنفيذ' || p.status === 'نشط' || p.status === 'مخطط له').length;
-        }
+       updateDashboardStats
 
         function openGlobalSearchModal() {
             document.getElementById('globalSearchInput').value = '';
