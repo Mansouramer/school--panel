@@ -3267,7 +3267,7 @@ try { applyGender(); } catch (e) { console.error(e); }
     try {
         const a = document.getElementById('schoolHeaderLabel');
         const b = document.getElementById('principalHeaderLabel');
-        if (a) a.innerText = 'المملكة العربية السعودية| إوزارة التعليم | ' + schoolConfig.schoolName;
+        if (a) a.innerText = 'المملكة العربية السعودية| وزارة التعليم | ' + schoolConfig.schoolName;
         if (b) b.innerText = schoolConfig.developerName;
         const setTxt = (sel, t) => { const e = document.querySelector(sel); if (e) e.innerText = t; };
         setTxt('#loginModal h2', schoolConfig.schoolName);
