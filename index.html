@@ -2191,33 +2191,7 @@ async function uploadImage(dataUrl) {
             fullWin.style.display = 'flex';
         }
 
-        function renderTable() {
-            const container = document.getElementById('tableContainer');
-            let html = '';
-
-            if (currentSection === 'pdImpact') {
-                html = `
-                    <div class="mb-4 bg-gradient-to-l from-violet-100/60 to-indigo-100/40 backdrop-blur-sm p-3 sm:p-4 rounded-xl border border-violet-200/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl bg-violet-100 p-2 rounded-xl">💡</span>
-                            <div>
-                                <h2 class="text-sm sm:text-lg font-bold text-violet-900">سجل متابعة أثر التطوير المهني للمعلمات</h2>
-                                <p class="text-[11px] sm:text-xs text-violet-800 mt-1">نموذج تفاعلي لقياس الأثر (قبلي / بعدي) لكل معلمة — يُحفظ تلقائيًا داخل متصفحك</p>
-                            </div>
-                        </div>
-                        <button onclick="printPdImpactFrame()" class="no-print w-full sm:w-auto bg-violet-600 hover:bg-violet-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium transition shadow-sm flex items-center justify-center gap-1">
-                            <span>🖨️</span><span>طباعة السجل</span>
-                        </button>
-                    </div>
-                    <iframe id="pdImpactFrame" title="سجل متابعة أثر التطوير المهني" style="width:100%; min-height:1400px; border:none; border-radius:16px; background:#eef3f2;"></iframe>
-                `;
-                container.innerHTML = html;
-                loadPdImpactFrame();
-                updateDashboardStats();
-                return;
-            }
-
-            if (currentSection === 'sustainability') {
+                   if (currentSection === 'sustainability') {
                 renderSustainabilitySection(container);
                 updateDashboardStats();
                 return;
