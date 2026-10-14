@@ -1,4 +1,4 @@
-const CACHE_NAME = "dawood-school-v2";
+const CACHE_NAME = "school-panel-v3";
 const CORE_ASSETS = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (event) => {
