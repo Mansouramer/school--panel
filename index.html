@@ -3317,5 +3317,21 @@ try { applyGender(); } catch (e) { console.error(e); }
     else addNameBg();
 })();
            </script>
+    <!-- عنصر العرض داخل نفس الشاشة -->
+<div id="pdImpactContainer" style="display:none; width:100%; height:90vh; margin-top:20px;">
+    <iframe src="pd_impact.html" style="width:100%; height:100%; border:none; border-radius:16px; background:#eef3f2;" title="سجل أثر التطوير المهني"></iframe>
+</div>
+
+<script>
+// دالة لإظهار صفحة التطوير وإخفاء الأقسام الأخرى (أو إظهارها في مكان المحتوى)
+function showPdImpactFrame() {
+    const container = document.getElementById('pdImpactContainer');
+    if (container) {
+        // إخفاء الأقسام الأخرى إذا لزم الأمر، وإظهار إطار التطوير المهني
+        container.style.display = container.style.display === 'none' ? 'block' : 'none';
+        container.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+</script>
 </body>
 </html>
