@@ -3,13 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="لوحة المدرسة">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" href="favicon-64.png">
     <title>النظام الشامل لإدارة السجلات وخطة الاستعداد - الابتدائية الأولى بنات</title>
     <!-- استدعاء مكتبة التصميم السريع Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -262,7 +255,31 @@
         </div>
     </div>
 
-  
+    <!-- لوحة مؤشرات الأداء -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 no-print">
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">إجمالي البرامج المنفذة</p>
+                <h3 id="stat-programs" class="text-2xl font-bold text-blue-600">0</h3>
+            </div>
+            <span class="text-2xl bg-blue-100/50 p-2.5 rounded-xl">🎯</span>
+        </div>
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">إجمالي السجلات العامة</p>
+                <h3 id="stat-records" class="text-2xl font-bold text-emerald-600">0</h3>
+            </div>
+            <span class="text-2xl bg-emerald-100/50 p-2.5 rounded-xl">📂</span>
+        </div>
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">برامج قيد التنفيذ</p>
+                <h3 id="stat-active" class="text-2xl font-bold text-amber-600">0</h3>
+            </div>
+            <span class="text-2xl bg-amber-100/50 p-2.5 rounded-xl">⚡</span>
+        </div>
+    </div>
+
     <!-- رأس الصفحة -->
     <header class="mb-4 bg-white/60 backdrop-blur-md p-3 sm:p-6 rounded-2xl shadow-sm border-r-4 border-blue-600 flex flex-col lg:flex-row justify-between items-center gap-4 border border-white/40 no-print">
         <div class="text-right w-full lg:w-auto">
@@ -652,19 +669,19 @@ const schoolConfig = {
         
         let teachersPerformanceData = [
             {
-                name: "المعلم/ة",
+                name: "أ. فاطمة محمد الغامدي",
                 pin: "1001",
                 evaluations: { 1: true, 2: true, 3: false, 4: true, 5: true, 6: true, 7: true, 8: false, 9: true, 10: true, 11: true },
                 evidences: {}
             },
             {
-                name: "ألمعلم/ة",
+                name: "أ. نورة عبد الله العمري",
                 pin: "1002",
                 evaluations: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: false, 8: true, 9: true, 10: true, 11: false },
                 evidences: {}
             },
             {
-                name: "المعلم/ة",
+                name: "أ. سارة سعيد الأحمدي",
                 pin: "1003",
                 evaluations: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 10: true, 11: true },
                 evidences: {}
@@ -1855,7 +1872,11 @@ if (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) {
             window.print();
         }
 
-       updateDashboardStats
+        function updateDashboardStats() {
+            document.getElementById('stat-programs').innerText = programs.length;
+            document.getElementById('stat-records').innerText = records.length + principalRecordsData.length + professionalDevRecordsData.length;
+            document.getElementById('stat-active').innerText = programs.filter(p => p.status === 'قيد التنفيذ' || p.status === 'نشط' || p.status === 'مخطط له').length;
+        }
 
         function openGlobalSearchModal() {
             document.getElementById('globalSearchInput').value = '';
@@ -3136,44 +3157,7 @@ function fillSchoolInfo() {
 const IS_FEM = (cfg.gender === 'female');
 const W = '(?![\\u0621-\\u064A])';
 const R = (p, r) => [new RegExp(p, 'g'), r];
-const MALE_RULES = [
-    R('\\/(?:ة|ات|ي)' + W, ''),
-
-    // عبارات خاصة أولًا (حتى لا تتأثر "الشؤون التعليمية" و"الأنشطة الطلابية")
-    R('معلمةة', 'معلم'),
-    R('الوكيلة التعليمية' , 'الوكيل التعليمي'),
-    R('المرشدة الطلابية', 'المرشد الطلابي'),
-    R('الموجهة الطلابية', 'الموجه الطلابي'),
-    R('المعلمة المختارة', 'المعلم المختار'),
-    R('المعلمة الحالية', 'المعلم الحالي'),
-    R('المسؤولة الفعلية', 'المسؤول الفعلي'),
-    R('معلمتنا' + W, 'معلمنا'),
-    R('الفاضلة' + W, 'الفاضل'),
-
-    // الجمع
-    R('(متعلم|منسوب|متفوق|موهوب|متعثر|مستفيد|مستجد|متأخر)ات' + W, '$1ين'),
-    R('معلمات' + W, 'معلمين'),
-    R('طالبات' + W, 'طلاب'),
-
-    // المفرد
-    R('معلمة' + W, 'معلم'),
-    R('طالبة' + W, 'طالب'),
-    R('مديرة' + W, 'مدير'),
-    R('وكيلة' + W, 'وكيل'),
-    R('أخصائية' + W, 'أخصائي'),
-    R('موجهة' + W, 'موجه'),
-    R('مرشدة' + W, 'مرشد'),
-    R('منسقة' + W, 'منسق'),
-    R('رائدة' + W, 'رائد'),
-    R('مشرفة' + W, 'مشرف'),
-    R('مسؤولة' + W, 'مسؤول'),
-    R('رئيسة' + W, 'رئيس'),
-
-    // اسم المدرسة والرموز
-    R('بنات' + W, 'بنين'),
-    R('Girls', 'Boys'),
-    R('👩‍🏫', '👨‍🏫')
-];
+const MALE_RULES = [ R('\\/(?:ة|ات|ي)' + W, '') ];
 const FEM_RULES = [
     R('الطلاب\\/ات', 'الطالبات'), R('المعلمين\\/ات', 'المعلمات'),
     R('\\/ة', 'ة'), R('\\/ات', 'ات'),
@@ -3295,6 +3279,5 @@ try { applyGender(); } catch (e) { console.error(e); }
     else addNameBg();
 })();
            </script>
-    <script src="pwa-loader.js"></script>
 </body>
 </html>
