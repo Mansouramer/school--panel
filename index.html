@@ -2922,25 +2922,17 @@ async function uploadImage(dataUrl) {
         // ====== سجل متابعة أثر التطوير المهني (مضمّن داخل سجلات المديرة) ======
         // يُحمَّل كمستند مستقل داخل إطار iframe لتفادي أي تعارض في التنسيقات أو السكربتات
         // مع بقية لوحة التحكم، مع الحفاظ الكامل على طابعه التفاعلي والملوّن الخاص به.
-        function loadPdImpactFrame() {
-            const frame = document.getElementById('pdImpactFrame');
-            if (!frame) return;
-            try {
-                const bytes = Uint8Array.from(atob(PD_IMPACT_HTML_B64), c => c.charCodeAt(0));
-                const htmlStr = new TextDecoder('utf-8').decode(bytes);
-                const blob = new Blob([htmlStr], { type: 'text/html' });
-                const url = URL.createObjectURL(blob);
-                frame.src = url;
-                frame.onload = () => {
-                    try {
-                        const h = frame.contentWindow.document.documentElement.scrollHeight;
-                        frame.style.height = (h + 40) + 'px';
-                    } catch (e) {}
-                };
-            } catch (e) {
-                frame.outerHTML = '<p class="text-center text-red-600 text-sm py-10">تعذر تحميل سجل التطوير المهني.</p>';
-            }
-        }
+       function loadPdImpactFrame() {
+    const frame = document.getElementById('pdImpactFrame');
+    if (!frame) return;
+    frame.src = '/pd_impact.html';
+    frame.onload = () => {
+        try {
+            const h = frame.contentWindow.document.documentElement.scrollHeight;
+            frame.style.height = (h + 40) + 'px';
+        } catch (e) {}
+    };
+}
 
         function printPdImpactFrame() {
             const frame = document.getElementById('pdImpactFrame');
