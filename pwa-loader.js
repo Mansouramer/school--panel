@@ -20,7 +20,7 @@
   addMeta('apple-mobile-web-app-capable', 'yes');
   addMeta('mobile-web-app-capable', 'yes');
   addMeta('apple-mobile-web-app-status-bar-style', 'black-translucent');
-  addMeta('apple-mobile-web-app-title', 'مدرسة داوود');
+    addMeta('apple-mobile-web-app-title', 'لوحة المدرسة');
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function(){
