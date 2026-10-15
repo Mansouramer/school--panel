@@ -634,7 +634,57 @@
             </form>
         </div>
     </div>
-
+    <!-- نافذة إضافة مؤشر استدامة -->
+    <div id="sustAddModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden justify-center items-center p-3 sm:p-4 z-50">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-6 w-full max-w-lg shadow-xl max-h-[90vh] overflow-y-auto mx-2 border border-white/40">
+            <h3 class="text-lg sm:text-xl font-bold text-amber-900 mb-4">➕ إضافة مؤشر جديد (استدامة التميز)</h3>
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">رقم المؤشر</label>
+                        <input type="text" id="sustNewId" placeholder="مثال: 5-1-1-1" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">نسبة الأداء %</label>
+                        <input type="number" id="sustNewPerf" min="0" max="100" step="0.01" value="0" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">المجال (اختر أو اكتب مجالاً جديداً)</label>
+                    <input type="text" id="sustNewDomain" list="sustDomainList" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                    <datalist id="sustDomainList"></datalist>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">اسم المؤشر</label>
+                    <input type="text" id="sustNewIndicator" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">السجل المطلوب</label>
+                    <textarea id="sustNewRecord" rows="2" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">المسؤولة</label>
+                        <input type="text" id="sustNewResponsible" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">الدورية</label>
+                        <select id="sustNewFreq" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                            <option>أسبوعي</option><option selected>شهري</option><option>فصلي</option><option>سنوي</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-700 mb-1">الشواهد المطلوبة (نص)</label>
+                    <input type="text" id="sustNewEvidence" class="w-full border border-gray-200/60 rounded-xl px-3 py-2 text-sm bg-white/50 focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="flex justify-end gap-3 pt-3 border-t border-gray-200/50">
+                    <button type="button" onclick="closeSustAddModal()" class="px-4 py-2 rounded-xl text-sm text-gray-600 hover:bg-white/60 transition">إلغاء</button>
+                    <button type="button" onclick="saveSustIndicator()" class="px-5 py-2 rounded-xl text-sm bg-amber-600 text-white hover:bg-amber-700 transition">حفظ المؤشر</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- السكريبت البرمجي -->
     <script>
       const cfg = window.SCHOOL_CFG || {};
