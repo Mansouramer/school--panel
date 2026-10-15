@@ -252,6 +252,30 @@
         </div>
     </div>
 
+    <!-- لوحة مؤشرات الأداء -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 no-print">
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">إجمالي البرامج المنفذة</p>
+                <h3 id="stat-programs" class="text-2xl font-bold text-blue-600">0</h3>
+            </div>
+            <span class="text-2xl bg-blue-100/50 p-2.5 rounded-xl">🎯</span>
+        </div>
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">إجمالي السجلات العامة</p>
+                <h3 id="stat-records" class="text-2xl font-bold text-emerald-600">0</h3>
+            </div>
+            <span class="text-2xl bg-emerald-100/50 p-2.5 rounded-xl">📂</span>
+        </div>
+        <div class="bg-white/60 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-sm border border-white/40 flex items-center justify-between">
+            <div>
+                <p class="text-xs text-gray-600 font-medium">برامج قيد التنفيذ</p>
+                <h3 id="stat-active" class="text-2xl font-bold text-amber-600">0</h3>
+            </div>
+            <span class="text-2xl bg-amber-100/50 p-2.5 rounded-xl">⚡</span>
+        </div>
+    </div>
 
     <!-- رأس الصفحة -->
     <header class="mb-4 bg-white/60 backdrop-blur-md p-3 sm:p-6 rounded-2xl shadow-sm border-r-4 border-blue-600 flex flex-col lg:flex-row justify-between items-center gap-4 border border-white/40 no-print">
@@ -436,14 +460,6 @@
             <span class="text-lg sm:text-xl">⭐</span>
             <span class="text-[11px] sm:text-xs">تقييم أداء المعلمات</span>
         </button>
-                <button onclick="switchSection('circulars')" id="tab-circulars" class="p-2.5 sm:p-3 rounded-xl text-center transition bg-white/70 hover:bg-white text-gray-800 shadow-sm flex flex-col items-center justify-center gap-1 role-restricted border border-white/50 font-bold" data-allowed="principal">
-            <span class="text-lg sm:text-xl">📣</span>
-            <span class="text-[11px] sm:text-xs">التعاميم والقرارات</span>
-        </button>
-        <button onclick="switchSection('honors')" id="tab-honors" class="p-2.5 sm:p-3 rounded-xl text-center transition bg-white/70 hover:bg-white text-gray-800 shadow-sm flex flex-col items-center justify-center gap-1 role-restricted border border-white/50 font-bold" data-allowed="principal">
-            <span class="text-lg sm:text-xl">🏅</span>
-            <span class="text-[11px] sm:text-xs">التكريم والمبادرات</span>
-        </button>
     </div>
 
     <!-- محتوى الجداول -->
@@ -548,8 +564,8 @@
                     <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">عنوان أو اسم السجل/المهام</label>
                     <input type="text" id="inputTitle" required class="w-full border border-gray-200/60 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 bg-white/50">
                 </div>
-                                <div>
-                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">التصنيف / اسم المعلمة المنفذة (للمبادرات)</label>
+                <div>
+                    <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">التصنيف أو القسم</label>
                     <input type="text" id="inputCategory" class="w-full border border-gray-200/60 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 bg-white/50">
                 </div>
                 <div>
@@ -687,7 +703,7 @@ const schoolConfig = {
 
         let activeUserRole = localStorage.getItem('dawood_user_role') || null;
         let loggedTeacherName = localStorage.getItem('dawood_logged_teacher') || null;
-        let currentSection = '';
+        let currentSection = 'teacherPerf';
         let editingIndex = null;
         let currentImagesList = [];
         let progImagesList = [];
@@ -1586,18 +1602,9 @@ const schoolConfig = {
                 { desc: "التأكد من جاهزية طفايات الحريق ومخارج الأزمات والطوارئ.", date: '2026-06-01', images: [] },
                 { desc: "إعداد خطة الإخلاء الوهمي وتوزيع اللوحات الإرشادية.", date: '2026-06-07', images: [] }
             ] },
-                        environment: { title: "لجنة البيئة المدرسية", tasks: [
+            environment: { title: "لجنة البيئة المدرسية", tasks: [
                 { desc: "تنظيف وتعقيم الفصول الدراسية والممرات والساحات.", date: '2026-06-01', images: [] },
                 { desc: "تزيين البيئة الصفية وتهيئة لوحات الإعلانات المدرسية.", date: '2026-06-08', images: [] }
-            ] },
-
-            circulars: { title: "سجل التعاميم والقرارات", tasks: [
-                { desc: "حصر التعاميم الوزارية الواردة وتعميمها على المعلمات.", date: '2026-06-01', images: [] },
-                { desc: "توثيق قرارات الإدارة ومحاضر الإبلاغ بها.", date: '2026-06-03', images: [] }
-            ] },
-            honors: { title: "سجل التكريم والمبادرات المتميزة", tasks: [
-                { desc: "توثيق شهادات الشكر والتقدير للمعلمات المتميزات.", date: '2026-06-01', images: [] },
-                { desc: "توثيق المبادرات النوعية المنفذة هذا العام.", date: '2026-06-05', images: [] }
             ] }
         };
 
@@ -1708,7 +1715,7 @@ const schoolConfig = {
             else if (activeUserRole === 'eduAffairs') switchSection('eduAffairs');
             else if (activeUserRole === 'studentAffairs') switchSection('studentAffairs');
             else if (activeUserRole === 'evalSpecialist') switchSection('evalSpecialist');
-            else switchSection('');
+            else switchSection('teacherPerf');
         }
 
        let lastSynced = {};
@@ -1910,7 +1917,13 @@ if (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) {
             document.getElementById('printBodyContent').innerHTML = currentTableHTML;
             window.print();
         }
-       
+
+        function updateDashboardStats() {
+            document.getElementById('stat-programs').innerText = programs.length;
+            document.getElementById('stat-records').innerText = records.length + principalRecordsData.length + professionalDevRecordsData.length;
+            document.getElementById('stat-active').innerText = programs.filter(p => p.status === 'قيد التنفيذ' || p.status === 'نشط' || p.status === 'مخطط له').length;
+        }
+
         function openGlobalSearchModal() {
             document.getElementById('globalSearchInput').value = '';
             document.getElementById('globalSearchResults').innerHTML = '<p class="text-center text-xs text-gray-500 py-8">ابدأ الكتابة في حقل البحث بالأعلى للعثور على العناصر مباشرة...</p>';
@@ -2230,6 +2243,7 @@ async function uploadImage(dataUrl) {
 
             if (currentSection === 'sustainability') {
                 renderSustainabilitySection(container);
+                updateDashboardStats();
                 return;
             }
 
@@ -2314,7 +2328,14 @@ async function uploadImage(dataUrl) {
                     </div>
                 `;
 
-                  if (!activeTeacher) {
+                if (!activeTeacher) {
+                    html += `
+                        <div class="bg-white/40 backdrop-blur-md rounded-2xl border border-white/40 p-12 text-center shadow-sm">
+                            <span class="text-4xl mb-2 inline-block">📌</span>
+                            <h3 class="text-base font-bold text-gray-800">الرجاء اختيار معلمة من القائمة بالأعلى</h3>
+                            <p class="text-xs text-gray-600 mt-1">انقر على خانة الاختيار لعرض بنود التقييم وشواهد المعلمة المطلوبة.</p>
+                        </div>
+                    `;
                 } else {
                     let score = 0;
                     evaluationCriteriaList.forEach(c => {
@@ -2566,7 +2587,6 @@ async function uploadImage(dataUrl) {
                             <tr class="border-b border-gray-200/50 text-gray-500 text-xs sm:text-sm">
                                 <th class="pb-3 w-12">م</th>
                                 <th class="pb-3">عنصر الخطة الإجرائية والمهام</th>
-                                ${currentSection === 'honors' ? '<th class="pb-3">المعلمة المنفذة</th>' : ''}
                                 <th class="pb-3">تاريخ التنفيذ</th>
                                 <th class="pb-3 text-center">الشواهد والتقارير</th>
                                 <th class="pb-3 w-32 text-center no-print">الإجراء</th>
@@ -2590,9 +2610,6 @@ async function uploadImage(dataUrl) {
                                 <a href="javascript:void(0)" onclick="openModalForEdit('${currentSection}', ${index})" class="text-blue-700 hover:text-indigo-800 underline font-bold cursor-pointer" title="انقر لإضافة وتعديل الشواهد">${task.desc}</a>
                             </td>
                             <td class="py-4 text-gray-800 font-semibold font-mono">${task.date || '-'}</td>
-                                                        </td>
-                            ${currentSection === 'honors' ? `<td class="py-4 text-gray-800 font-bold">${task.category || '-'}</td>` : ''}
-                            <td class="py-4 text-gray-800 font-semibold font-mono">${task.date || '-'}</td>
                             <td class="py-4 text-center">${imgBadge}</td>
                             <td class="py-4 text-center no-print">
                                 <button onclick="openModalForEdit('${currentSection}', ${index})" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100/80 text-blue-800 hover:bg-blue-200 transition">
@@ -2606,6 +2623,7 @@ async function uploadImage(dataUrl) {
             }
 
             container.innerHTML = html;
+            updateDashboardStats();
         }
 
         function viewTeacherEvidenceModalImages(teacherName, critId) {
@@ -2777,7 +2795,7 @@ async function uploadImage(dataUrl) {
             else item = readinessData[section].tasks[index];
 
             document.getElementById('inputTitle').value = item.title || item.desc || '';
-           document.getElementById('inputCategory').value = item.category || (section === 'honors' ? '' : 'عنصر إجرائي');
+            document.getElementById('inputCategory').value = item.category || 'عنصر إجرائي';
             document.getElementById('inputDate').value = item.date || new Date().toISOString().split('T')[0];
 
             currentImagesList = item.images ? [...item.images] : (item.image ? [{src: item.image, date: 'تاريخ غير مدون'}] : []);
@@ -2901,7 +2919,7 @@ async function uploadImage(dataUrl) {
                 else if(currentSection === 'evalSpecialist') { evalSpecialistRecordsData[editingIndex].title = title; evalSpecialistRecordsData[editingIndex].category = category; evalSpecialistRecordsData[editingIndex].date = date; evalSpecialistRecordsData[editingIndex].images = currentImagesList; }
                 else if(currentSection === 'records') { records[editingIndex].title = title; records[editingIndex].category = category; records[editingIndex].date = date; records[editingIndex].images = currentImagesList; }
                 else if(currentSection === 'programs') { programs[editingIndex].title = title; programs[editingIndex].category = category; programs[editingIndex].date = date; programs[editingIndex].images = currentImagesList; }
-                else { readinessData[currentSection].tasks[editingIndex].desc = title; readinessData[currentSection].tasks[editingIndex].category = category; readinessData[currentSection].tasks[editingIndex].date = date; readinessData[currentSection].tasks[editingIndex].images = currentImagesList; }
+                else { readinessData[currentSection].tasks[editingIndex].desc = title; readinessData[currentSection].tasks[editingIndex].date = date; readinessData[currentSection].tasks[editingIndex].images = currentImagesList; }
             } else {
                 if(currentSection === 'principal') principalRecordsData.unshift({ id: principalRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
                 else if(currentSection === 'professionalDev') professionalDevRecordsData.unshift({ id: professionalDevRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
@@ -2913,7 +2931,7 @@ async function uploadImage(dataUrl) {
                 else if(currentSection === 'evalSpecialist') evalSpecialistRecordsData.unshift({ id: evalSpecialistRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
                 else if(currentSection === 'records') records.unshift({ title, category, date, status: 'محدث', images: currentImagesList });
                 else if(currentSection === 'programs') programs.unshift({ title, category, date, status: 'قيد التنفيذ', images: currentImagesList });
-                else { if(readinessData[currentSection]) readinessData[currentSection].tasks.push({ desc: title, category, date, status: 'نفذت ✓', images: currentImagesList });
+                else { if(readinessData[currentSection]) readinessData[currentSection].tasks.push({ desc: title, date, status: 'نفذت ✓', images: currentImagesList }); }
             }
 
             saveDataLocally();
