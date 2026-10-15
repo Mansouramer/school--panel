@@ -3025,7 +3025,55 @@ async function uploadImage(dataUrl) {
             document.getElementById('viewImageModal').classList.remove('hidden');
             document.getElementById('viewImageModal').classList.add('flex');
         }
+        function openSustAddModal() {
+            ['sustNewId','sustNewDomain','sustNewIndicator','sustNewRecord','sustNewResponsible','sustNewEvidence']
+                .forEach(id => document.getElementById(id).value = '');
+            document.getElementById('sustNewPerf').value = 0;
+            document.getElementById('sustNewFreq').value = 'شهري';
+            const domains = [...new Set(sustainabilityRecords.map(r => r.domain))];
+            document.getElementById('sustDomainList').innerHTML = domains.map(d => `<option value="${d}">`).join('');
+            document.getElementById('sustAddModal').classList.remove('hidden');
+            document.getElementById('sustAddModal').classList.add('flex');
+        }
 
+        function closeSustAddModal() {
+            document.getElementById('sustAddModal').classList.add('hidden');
+            document.getElementById('sustAddModal').classList.remove('flex');
+        }
+
+        function saveSustIndicator() {
+            const id = document.getElementById('sustNewId').value.trim();
+            const domain = document.getElementById('sustNewDomain').value.trim();
+            const indicator = document.getElementById('sustNewIndicator').value.trim();
+            const perf = parseFloat(document.getElementById('sustNewPerf').value) || 0;
+
+            if (!id || !domain || !indicator) { alert('الرجاء تعبئة رقم المؤشر والمجال واسم المؤشر.'); return; }
+            if (sustainabilityRecords.some(r => String(r.id) === id)) { alert('رقم المؤشر موجود مسبقاً، اختر رقماً آخر.'); return; }
+
+            const classification = perf >= 85 ? 'التميز' : (perf >= 70 ? 'التقدم' : 'الانطلاق');
+            sustainabilityRecords.push({
+                id, domain, indicator, perf, classification,
+                priority: classification === 'التميز' ? 'استدامة' : 'أولوية علاجية',
+                record: document.getElementById('sustNewRecord').value.trim(),
+                responsible: document.getElementById('sustNewResponsible').value.trim(),
+                freq: document.getElementById('sustNewFreq').value,
+                evidence: document.getElementById('sustNewEvidence').value.trim(),
+                status: 'لم يحدد', owner: '', notes: '', images: []
+            });
+            saveDataLocally();
+            closeSustAddModal();
+            renderTable();
+        }
+
+        function deleteSustIndicator(idx) {
+            const r = sustainabilityRecords[idx];
+            if (!r) return;
+            if (confirm(`هل أنت متأكد من حذف المؤشر (${r.id}) ؟ لا يمكن التراجع عن الحذف.`)) {
+                sustainabilityRecords.splice(idx, 1);
+                saveDataLocally();
+                renderTable();
+            }
+        }
         function renderSustainabilitySection(container) {
             const total = sustainabilityRecords.length;
             const counts = { 'متوفر ومحدث': 0, 'يحتاج تحديث': 0, 'غير متوفر': 0, 'لم يحدد': 0 };
