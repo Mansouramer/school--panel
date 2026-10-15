@@ -2909,7 +2909,7 @@ async function uploadImage(dataUrl) {
                 else if(currentSection === 'evalSpecialist') evalSpecialistRecordsData.unshift({ id: evalSpecialistRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
                 else if(currentSection === 'records') records.unshift({ title, category, date, status: 'محدث', images: currentImagesList });
                 else if(currentSection === 'programs') programs.unshift({ title, category, date, status: 'قيد التنفيذ', images: currentImagesList });
-                else { if(readinessData[currentSection]) readinessData[currentSection].tasks.push({ desc: title, date, status: 'نفذت ✓', images: currentImagesList }); }
+                else { if(readinessData[currentSection]) readinessData[currentSection].tasks.push({ desc: title, category, date, status: 'نفذت ✓', images: currentImagesList });
             }
 
             saveDataLocally();
