@@ -2897,7 +2897,7 @@ async function uploadImage(dataUrl) {
                 else if(currentSection === 'evalSpecialist') { evalSpecialistRecordsData[editingIndex].title = title; evalSpecialistRecordsData[editingIndex].category = category; evalSpecialistRecordsData[editingIndex].date = date; evalSpecialistRecordsData[editingIndex].images = currentImagesList; }
                 else if(currentSection === 'records') { records[editingIndex].title = title; records[editingIndex].category = category; records[editingIndex].date = date; records[editingIndex].images = currentImagesList; }
                 else if(currentSection === 'programs') { programs[editingIndex].title = title; programs[editingIndex].category = category; programs[editingIndex].date = date; programs[editingIndex].images = currentImagesList; }
-                else { readinessData[currentSection].tasks[editingIndex].desc = title; readinessData[currentSection].tasks[editingIndex].date = date; readinessData[currentSection].tasks[editingIndex].images = currentImagesList; }
+                else { readinessData[currentSection].tasks[editingIndex].desc = title; readinessData[currentSection].tasks[editingIndex].category = category; readinessData[currentSection].tasks[editingIndex].date = date; readinessData[currentSection].tasks[editingIndex].images = currentImagesList; }
             } else {
                 if(currentSection === 'principal') principalRecordsData.unshift({ id: principalRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
                 else if(currentSection === 'professionalDev') professionalDevRecordsData.unshift({ id: professionalDevRecordsData.length + 1, title, category, date, executed: true, images: currentImagesList });
