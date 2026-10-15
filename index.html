@@ -3123,6 +3123,7 @@ async function uploadImage(dataUrl) {
                             <option value="">كل المجالات</option>
                             ${domains.map(d => `<option value="${d}" ${d === sustainabilityFilterDomain ? 'selected' : ''}>${d}</option>`).join('')}
                         </select>
+                        <button onclick="openSustAddModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs font-bold transition shadow-sm whitespace-nowrap">➕ إضافة مؤشر</button>
                     </div>
                 </div>
                 <div class="overflow-x-auto w-full">
