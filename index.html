@@ -2297,14 +2297,8 @@ async function uploadImage(dataUrl) {
                     </div>
                 `;
 
-                if (!activeTeacher) {
-                    html += `
-                        <div class="bg-white/40 backdrop-blur-md rounded-2xl border border-white/40 p-12 text-center shadow-sm">
-                            <span class="text-4xl mb-2 inline-block">📌</span>
-                            <h3 class="text-base font-bold text-gray-800">الرجاء اختيار معلمة من القائمة بالأعلى</h3>
-                            <p class="text-xs text-gray-600 mt-1">انقر على خانة الاختيار لعرض بنود التقييم وشواهد المعلمة المطلوبة.</p>
-                        </div>
-                    `;
+                               if (!activeTeacher) {
+                    // لا يظهر شيء حتى يتم اختيار معلمة من القائمة المنسدلة
                 } else {
                     let score = 0;
                     evaluationCriteriaList.forEach(c => {
