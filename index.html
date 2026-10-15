@@ -1893,13 +1893,7 @@ if (window.SCHOOL_CFG && window.SCHOOL_CFG.driveUrl) {
             document.getElementById('printBodyContent').innerHTML = currentTableHTML;
             window.print();
         }
-
-        function updateDashboardStats() {
-            document.getElementById('stat-programs').innerText = programs.length;
-            document.getElementById('stat-records').innerText = records.length + principalRecordsData.length + professionalDevRecordsData.length;
-            document.getElementById('stat-active').innerText = programs.filter(p => p.status === 'قيد التنفيذ' || p.status === 'نشط' || p.status === 'مخطط له').length;
-        }
-
+       
         function openGlobalSearchModal() {
             document.getElementById('globalSearchInput').value = '';
             document.getElementById('globalSearchResults').innerHTML = '<p class="text-center text-xs text-gray-500 py-8">ابدأ الكتابة في حقل البحث بالأعلى للعثور على العناصر مباشرة...</p>';
