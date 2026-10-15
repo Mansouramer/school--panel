@@ -2773,7 +2773,7 @@ async function uploadImage(dataUrl) {
             else item = readinessData[section].tasks[index];
 
             document.getElementById('inputTitle').value = item.title || item.desc || '';
-            document.getElementById('inputCategory').value = item.category || 'عنصر إجرائي';
+           document.getElementById('inputCategory').value = item.category || (section === 'honors' ? '' : 'عنصر إجرائي');
             document.getElementById('inputDate').value = item.date || new Date().toISOString().split('T')[0];
 
             currentImagesList = item.images ? [...item.images] : (item.image ? [{src: item.image, date: 'تاريخ غير مدون'}] : []);
