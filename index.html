@@ -2590,6 +2590,9 @@ async function uploadImage(dataUrl) {
                                 <a href="javascript:void(0)" onclick="openModalForEdit('${currentSection}', ${index})" class="text-blue-700 hover:text-indigo-800 underline font-bold cursor-pointer" title="انقر لإضافة وتعديل الشواهد">${task.desc}</a>
                             </td>
                             <td class="py-4 text-gray-800 font-semibold font-mono">${task.date || '-'}</td>
+                                                        </td>
+                            ${currentSection === 'honors' ? `<td class="py-4 text-gray-800 font-bold">${task.category || '-'}</td>` : ''}
+                            <td class="py-4 text-gray-800 font-semibold font-mono">${task.date || '-'}</td>
                             <td class="py-4 text-center">${imgBadge}</td>
                             <td class="py-4 text-center no-print">
                                 <button onclick="openModalForEdit('${currentSection}', ${index})" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100/80 text-blue-800 hover:bg-blue-200 transition">
