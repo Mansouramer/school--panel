@@ -3181,6 +3181,9 @@ async function uploadImage(dataUrl) {
                                 <input type="file" accept="image/*" multiple class="hidden" onchange="sustPreviewImages(event, ${idx})">
                             </label>
                         </td>
+                                                <td class="py-3 text-center no-print">
+                            <button onclick="deleteSustIndicator(${idx})" class="text-red-700 hover:text-red-900 text-xs font-bold px-2 py-1 rounded bg-red-100/60 hover:bg-red-100 transition" title="حذف المؤشر">🗑️</button>
+                        </td>
                     </tr>
                 `;
             });
