@@ -2409,8 +2409,7 @@ async function uploadImage(dataUrl) {
                         </div>
                         <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                             ${currentSection === 'teacherPerfRecords' ? '<button onclick="switchSection(\'teacherPerf\')" class="no-print bg-orange-600 hover:bg-orange-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium transition shadow-sm">⭐ العودة لتقييم المعلمات</button>' : ''}
-                            ${currentSection === 'principal' ? '<button onclick="switchSection(\'pdImpact\')" class="no-print bg-violet-600 hover:bg-violet-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium transition shadow-sm">💡 سجل أثر التطوير المهني</button>' : ''}
-                            <button onclick="openSectionModal('${currentSection}')" class="no-print w-full sm:w-auto bg-${themeColor}-600 hover:bg-${themeColor}-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium transition shadow-sm flex items-center justify-center gap-1">
+                                                     <button onclick="openSectionModal('${currentSection}')" class="no-print w-full sm:w-auto bg-${themeColor}-600 hover:bg-${themeColor}-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium transition shadow-sm flex items-center justify-center gap-1">
                                 <span>➕</span>
                                 <span>إضافة سجل جديد لهذا القسم</span>
                             </button>
